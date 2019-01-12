@@ -51,11 +51,19 @@ class Welcome extends CI_Controller {
 		$this->form_validation->set_rules('username', 'Username', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 		if ($this->form_validation->run() === FALSE) {
+			$this->load->view('templates/header');
 			$this->load->view('login');
+			$this->load->view('templates/footer');
 		} else {
 			$data['kpi'] = $this->kpi->get_login($this->input->post('username'),$this->input->post('password'));
 			$this->session->set_userdata($data['kpi']['login']);
 			redirect('welcome/index','refresh');
 		}
+	}
+
+	public function dashboard(){
+		$this->load->view('templates/header');
+		$this->load->view('dashboard');
+		$this->load->view('templates/footer');
 	}
 }
