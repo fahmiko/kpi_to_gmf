@@ -31,20 +31,27 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$data['kpi'] = $this->kpi->get_kpi();
-		$this->load->view('templates/header');
-		$this->load->view('main', $data);
-		$this->load->view('templates/footer');
+		// $this->load->view('templates/header');
+		$this->load->view('dashboard', $data);
+		// $this->load->view('templates/footer');
 	}
 
 	public function create(){
-		$this->form_validation->set_rules('kpi_name', 'Nama KPI', 'required');
-		if ($this->form_validation->run() === FALSE) {
-			$this->load->view('templates/header');
-			$this->load->view('create_kpi');
-			$this->load->view('templates/footer');
-		} else {
-			# code...
-		}
+		$this->load->view('create_kpi');
+	}
+
+	public function create_structure(){
+		$data['level'] = array(
+			'kpi_name' => $this->input->post('kpi_name'),
+			'level2' => $this->input->post('level2'),
+			'level3' => $this->input->post('level3'),
+			'level4' => $this->input->post('level4')
+		);
+		$this->load->view('c_structure', $data);
+	}
+
+	public function test(){
+		echo $this->input->post('lv21');
 	}
 
 	public function login(){

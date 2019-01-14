@@ -1,43 +1,47 @@
-<div class="container" style="margin-top: 20px">
-	<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a href="#" class="nav-link" onclick="change_header('List KPI')" id="lkpi">List KPI</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link" onclick="change_header('buat KPI')" id="bkpi">Buat KPI</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link" onclick="change_header('isi Skor')" id="iskor">Isi Skor</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link"><?=$this->session->userdata('username')?>/<?=$this->session->userdata('jabatan')?></a>
-				</li>
-			</ul>
-	<div class="card bg-light mb-3" style="margin-top: 20px" id="card-list">
-  		<div class="card-header" id="title">Header</div>
-  		<div class="card-body">
-    		<h5 class="card-title">Light card title</h5>
-    		<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  		</div>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Buat Struktur KPI</title>
+	<link rel="stylesheet" href="<?=base_url()?>resources/vendors/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<?=form_open('welcome/create_structure')?>
+		<label>Buat KPI</label>
+		<input type="text" class="form-control" name="kpi_name" placeholder="Nama KPI"><br>
+		<input type="text" class="form-control" id="lv2" name="level2" placeholder="masukan jumlah lv2"><br>
+		<input type="text" class="form-control" id="lv3" name="level3" placeholder="masukan jumlah lv3"><br>
+		<input type="text" class="form-control" id="lv4" name="level4" placeholder="masukan jumlah lv4"><br>
+		<a onclick="show(2)" class="btn btn-primary">Buat Level 2</a>
+		<a onclick="show(3)" class="btn btn-primary">Buat Level 3</a>
+		<a onclick="show(4)" class="btn btn-primary">Buat Level 4</a>
+		<input type="submit" class="btn btn-success">
+		<?=form_close()?>
 	</div>
-
-	<div class="card bg-light mb-3" style="margin-top: 20px" id="card-create">
-  		<div class="card-header" id="title">Header</div>
-  		<div class="card-body">
-    		<h5 class="card-title">Light card title</h5>
-    		<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  		</div>
-	</div>
-</div>
+</body>
+</html>
+<script src="<?=base_url()?>resources/vendors/jquery/dist/jquery.min.js"></script>
+<script src="<?=base_url()?>resources/vendors/popper.js/dist/umd/popper.min.js"></script>
+<script src="<?=base_url()?>resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-function change_header(menu){
-	$('#title').html(menu);
-	if(menu == "list KPI"){
-		$('#lkpi').class('nav-link active');
-	}else if(menu == "buat KPI"){
-		$('#bkpi').class('nav-link active');
-	}else if (menu == "isi Skor") {
-		$('#iskor').class('nav-link active');
-	}
-}
+	$(document).ready(function() {
+    	$('#lv2').hide();
+    	$('#lv3').hide();
+    	$('#lv4').hide();
+    });
+
+    function show(num){
+    	var id = parseInt(num);
+    	switch(id){
+    		case 2:
+    		$('#lv2').show();
+    		break;
+    		case 3:
+    		$('#lv3').show();
+    		break;
+    		case 4:
+    		$('#lv4').show();
+    		break;
+    	}
+    }
 </script>
