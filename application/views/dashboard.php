@@ -33,7 +33,7 @@ function drawChart() {
 }
 
 function selectHandler(e) {
-    location.href = "#";
+    location.href = "<?=site_url()?>welcome/show";
 }
 </script>
 </body>

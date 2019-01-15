@@ -15,7 +15,7 @@
 		<a onclick="show(2)" class="btn btn-primary">Buat Level 2</a>
 		<a onclick="show(3)" class="btn btn-primary">Buat Level 3</a>
 		<a onclick="show(4)" class="btn btn-primary">Buat Level 4</a>
-		<input type="submit" name="structure" class="btn btn-success">
+		<input type="submit" class="btn btn-success">
 		<?=form_close()?>
 	</div>
 </body>

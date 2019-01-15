@@ -11,6 +11,8 @@
   <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
 </div>
 <div class="container-fluid">
+<?=form_open('welcome/create_structure')?>
+<input type="hidden" name="kpi_name" value="<?=$level['kpi_name']?>">
 	<div class="row">
 		<div class="col-md-4">
 			<label>KPI Lv 2</label><br>
@@ -19,8 +21,8 @@
   					<div class="input-group-prepend">
   					  <span class="input-group-text" id="">KPI & Bobot</span>
   					</div>
-  					<input type="text" class="form-control">
-  					<input type="text" class="form-control" id="precentage1<?=$i?>">
+  					<input type="text" class="form-control" name="kpi_lv2_<?=$i?>">
+  					<input type="text" class="form-control" id="precentage1<?=$i?>" name="weight_lv2_<?=$i?>">
   					<div class="input-group-append">
     					<span class="input-group-text">%</span>
   					</div>
@@ -35,8 +37,8 @@
   					<div class="input-group-prepend">
   					  <span class="input-group-text" id="">KPI & Bobot</span>
   					</div>
-  					<input type="text" class="form-control">
-  					<input type="text" class="form-control" id="precentage2<?=$i?>">
+  					<input type="text" class="form-control" name="kpi_lv3_<?=$i?>">
+  					<input type="text" class="form-control" id="precentage2<?=$i?>" name="weight_lv3_<?=$i?>">
   					<div class="input-group-append">
     					<span class="input-group-text">%</span>
   					</div>
@@ -51,15 +53,19 @@
   					<div class="input-group-prepend">
   					  <span class="input-group-text" id="">KPI & Bobot</span>
   					</div>
-  					<input type="text" class="form-control">
-  					<input type="text" class="form-control" id="precentage3<?=$i?>">
+  					<input type="text" class="form-control" name="kpi_lv4_<?=$i?>">
+  					<input type="text" class="form-control" id="precentage3<?=$i?>" name="weight_lv4_<?=$i?>">
+  					<div class="input-group-append">
+    					<span class="input-group-text">%</span>
+  					</div>
 				</div>
 			<?php }?>		
 			<button class="btn btn-default btn-sm" onclick="sum_precentage(3)" style="margin-top: 5px">check</button>
 			<br>
 		</div>
 	</div>
-	<input type="submit" class="btn btn-success">
+	<input type="submit" name="structure" value="Manage" class="btn btn-success">
+	<?=form_close()?>
 </div>
 </body>
 </html>

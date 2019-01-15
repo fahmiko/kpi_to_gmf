@@ -49,18 +49,68 @@ class Welcome extends CI_Controller {
 	}
 
 	public function create_structure(){
-		$data['level'] = array(
-			'kpi_name' => $this->input->post('kpi_name'),
-			'level2' => $this->input->post('level2'),
-			'level3' => $this->input->post('level3'),
-			'level4' => $this->input->post('level4')
-		);
+		if($this->input->post('structure')!=null){
+			$data['get_level'] = $this->session->userdata('structure_level');
+			$data['structure'] = array(
+				'kpi_name' => $this->input->post('kpi_name'),
+				'level2' => array(),
+				'level3' => array(),
+				'level4' => array()
+			);
+			// Input array level 2
+			for($i = 0;$i < $data['get_level']['level']['level2'];$i++){
+				$data['structure']['level2'] += array(
+					$i => array(
+						'name' => $this->input->post("kpi_lv2_$i"),
+						'weight' => $this->input->post("weight_lv2_$i")
+					)
+				);
+			}
+			//Input array level 3
+			for($i = 0;$i < $data['get_level']['level']['level3'];$i++){
+				$data['structure']['level3'] += array(
+					$i => array(
+						'name' => $this->input->post("kpi_lv3_$i"),
+						'weight' => $this->input->post("weight_lv3_$i")
+					)
+				);
+			}
+			//Input array Level 4
+			for($i = 0;$i < $data['get_level']['level']['level4'];$i++){
+				$data['structure']['level4'] += array(
+					$i => array(
+						'name' => $this->input->post("kpi_lv4_$i"),
+						'weight' => $this->input->post("weight_lv4_$i")
+					)
+				);
+			}
+			$data['select']['level2'] = array();
+			$data['select']['level3'] = array();
 
-		$this->load->view('c_structure', $data);
+			for($i = 0; $i < $data['get_level']['level']['level2'];$i++){
+				$data['select']['level2'][$i] = "<option>".$data['structure']['level2'][$i]['name']."</option>";
+			}
+
+			for($i = 0; $i < $data['get_level']['level']['level3'];$i++){
+				$data['select']['level3'][$i] = "<option>".$data['structure']['level3'][$i]['name']."</option>";
+			}
+
+			$this->session->set_userdata('structure',$data['structure']);
+			$this->load->view('m_structure', $data);
+		}else{
+			$data['level'] = array(
+				'kpi_name' => $this->input->post('kpi_name'),
+				'level2' => $this->input->post('level2'),
+				'level3' => $this->input->post('level3'),
+				'level4' => $this->input->post('level4')
+			);
+			$this->session->set_userdata('structure_level',$data);
+			$this->load->view('c_structure', $data);
+		}
 	}
 
 	public function test(){
-		echo $this->input->post('lv21');
+		$this->load->view('m_structure');
 	}
 
 	public function login(){
