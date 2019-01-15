@@ -36,6 +36,14 @@ class Welcome extends CI_Controller {
 		// $this->load->view('templates/footer');
 	}
 
+	public function show(){
+		$data['kpi'] = $this->db->where('level',2)->get('tb_kpi')->result_array();
+		$data['row'] = $this->db->where('level',2)->get('tb_kpi')->num_rows();
+		$data['kpi2'] = $this->db->where('level',3)->get('tb_kpi')->result_array();
+		$data['row2'] = $this->db->where('level',3)->get('tb_kpi')->num_rows();
+		$this->load->view('show_structure', $data, FALSE);
+	}
+
 	public function create(){
 		$this->load->view('create_kpi');
 	}
@@ -47,6 +55,7 @@ class Welcome extends CI_Controller {
 			'level3' => $this->input->post('level3'),
 			'level4' => $this->input->post('level4')
 		);
+
 		$this->load->view('c_structure', $data);
 	}
 
