@@ -17,12 +17,13 @@ $st = $this->session->userdata('structure');
 </div>
 <div class="container">
 	<!-- Card Level 2 -->
+<?php echo form_open('welcome/test')?>
 <div class="card">
   <div class="card-header">
     KPI LEVEL 2
   </div>
   <div class="card-body">
-  	<?php for($i = 0;$i < $st_lv['level']['level3'];$i++){ ?>
+  	<?php for($i = 0;$i < $st_lv['level']['level2'];$i++){ ?>
 	  <div class="input-group mb-1">
 	  	<div class="input-group-append">
 	   		<input type="text" class="form-control" value="<?=$st['level2'][$i]['name']?>" readonly="">
@@ -45,11 +46,12 @@ $st = $this->session->userdata('structure');
   <div class="card-body">
   	  <?php for($i = 0;$i < $st_lv['level']['level3'];$i++){ ?>
 	  <div class="input-group mb-1">
-	  	<select class="custom-select" id="inputGroupSelect02" style="max-width: 150px">
+	  	<select class="custom-select" name="parent_lv3_<?=$i?>" style="max-width: 150px">
 	    	<?php
 				for($j = 0;$j < $st_lv['level']['level2'];$j++){
 					echo $select['level2'][$j];
-					}
+
+				}
 			?>
 	  	</select>
 	  	<div class="input-group-append">
@@ -74,7 +76,7 @@ $st = $this->session->userdata('structure');
   <div class="card-body">
   	  <?php for($i = 0;$i < $st_lv['level']['level4'];$i++){ ?>
 	  <div class="input-group mb-1">
-	  	<select class="custom-select" id="inputGroupSelect02" style="max-width: 150px">
+	  	<select class="custom-select" name="parent_lv4_<?=$i?>" style="max-width: 150px">
 	    	<?php
 				for($j = 0;$j < $st_lv['level']['level3'];$j++){
 					echo $select['level3'][$j];
@@ -95,7 +97,7 @@ $st = $this->session->userdata('structure');
   </div>
 </div>
 <input type="submit" class="btn btn-success" style="margin-top: 20px"><br><br><br>
-	
+<?php echo form_close()?>
 </div>
 </body>
 </html>

@@ -88,11 +88,11 @@ class Welcome extends CI_Controller {
 			$data['select']['level3'] = array();
 
 			for($i = 0; $i < $data['get_level']['level']['level2'];$i++){
-				$data['select']['level2'][$i] = "<option>".$data['structure']['level2'][$i]['name']."</option>";
+				$data['select']['level2'][$i] = "<option value='".$data['structure']['level2'][$i]['name']."'>".$data['structure']['level2'][$i]['name']."</option>";
 			}
 
 			for($i = 0; $i < $data['get_level']['level']['level3'];$i++){
-				$data['select']['level3'][$i] = "<option>".$data['structure']['level3'][$i]['name']."</option>";
+				$data['select']['level3'][$i] = "<option value='".$data['structure']['level3'][$i]['name']."'>".$data['structure']['level3'][$i]['name']."</option>";
 			}
 
 			$this->session->set_userdata('structure',$data['structure']);
@@ -110,7 +110,70 @@ class Welcome extends CI_Controller {
 	}
 
 	public function test(){
-		$this->load->view('m_structure');
+		$level = $this->session->userdata('structure_level');
+		$structure = $this->session->userdata('structure');
+		// echo "insert kpi_name = ".$level['level']['kpi_name'];
+		$insert = array(
+			'kpi_name' => $level['level']['kpi_name'],
+			'created_by' => 'G1010'
+		);
+		$this->kpi->set_data('tb_kpi_name',$insert, null);
+		for($i = 0;$i < $level['level']['level2'];$i++){
+			$insert = array(
+				'kpi'      => $structure['level2'][$i]['name'],
+				'kpi_name' => $level['level']['kpi_name'],
+				'level'    => '2',
+				'weight'   => $structure['level2'][$i]['weight']
+
+			);
+			$this->kpi->set_data('tb_kpi',$insert, null);
+		}
+		for($i = 0;$i < $level['level']['level3'];$i++){
+			$insert = array(
+				'kpi'      => $structure['level3'][$i]['name'],
+				'kpi_name' => $level['level']['kpi_name'],
+				'level'    => '3',
+				'weight'   => $structure['level3'][$i]['weight']
+
+			);
+			$this->kpi->set_data('tb_kpi',$insert, null);
+		}
+		for($i = 0;$i < $level['level']['level4'];$i++){
+			$insert = array(
+				'kpi'      => $structure['level4'][$i]['name'],
+				'kpi_name' => $level['level']['kpi_name'],
+				'level'    => '4',
+				'weight'   => $structure['level4'][$i]['weight']
+
+			);
+			$this->kpi->set_data('tb_kpi',$insert, null);
+		}
+
+		for($i = 0;$i < $level['level']['level2'];$i++){
+			$insert = array(
+				'kpi_name'	 => $level['level']['kpi_name'],
+				'kpi'        => $structure['level2'][$i]['name'],
+				'kpi_parent' => $this->input->post("parent_lv2_$i")
+			);
+			$this->kpi->set_data('tb_kpi_structure',$insert, null);	
+		}
+		for($i = 0;$i < $level['level']['level3'];$i++){
+			$insert = array(
+				'kpi_name'	 => $level['level']['kpi_name'],
+				'kpi'        => $structure['level3'][$i]['name'],
+				'kpi_parent' => $this->input->post("parent_lv3_$i")
+			);
+			$this->kpi->set_data('tb_kpi_structure',$insert, null);	
+		}
+		for($i = 0;$i < $level['level']['level4'];$i++){
+			$insert = array(
+				'kpi_name'	 => $level['level']['kpi_name'],
+				'kpi'        => $structure['level4'][$i]['name'],
+				'kpi_parent' => $this->input->post("parent_lv4_$i")
+			);
+			$this->kpi->set_data('tb_kpi_structure',$insert, null);	
+		}
+		
 	}
 
 	public function login(){

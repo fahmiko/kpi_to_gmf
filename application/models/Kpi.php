@@ -16,6 +16,12 @@ class Kpi extends CI_Model {
 		return $data;
 	}
 
+	function set_data($object, $table, $id){
+		if($id == null){
+			$this->db->insert($table, $object);
+		}
+	}
+
 }
 
 /* End of file Kpi.php */

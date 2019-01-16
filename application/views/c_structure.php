@@ -28,7 +28,7 @@
   					</div>
 				</div>
 			<?php }?>
-			<button class="btn btn-default btn-sm" onclick="sum_precentage(1)" style="margin-top: 5px">check</button>
+			<a class="btn btn-default btn-sm" onclick="sum_precentage(1)" style="margin-top: 5px">check</a>
 		</div>
 		<div class="col-md-4">
 			<label>KPI Lv 3</label><br>
@@ -44,7 +44,7 @@
   					</div>
 				</div>
 			<?php }?>		
-			<button class="btn btn-default btn-sm" onclick="sum_precentage(2)" style="margin-top: 5px">check</button>
+			<a class="btn btn-default btn-sm" onclick="sum_precentage(2)" style="margin-top: 5px">check</a>
 		</div>
 		<div class="col-md-4">
 			<label>KPI Lv 4</label><br>
@@ -60,7 +60,7 @@
   					</div>
 				</div>
 			<?php }?>		
-			<button class="btn btn-default btn-sm" onclick="sum_precentage(3)" style="margin-top: 5px">check</button>
+			<a class="btn btn-default btn-sm" onclick="sum_precentage(3)" style="margin-top: 5px">check</a>
 			<br>
 		</div>
 	</div>
