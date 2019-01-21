@@ -9,6 +9,20 @@
 		<?=form_open('welcome/create_structure')?>
 		<label>Buat KPI</label>
 		<input type="text" class="form-control" name="kpi_name" placeholder="Nama KPI"><br>
+        <select class="form-control">
+            <option selected="selected" hidden="">Bulan Selesai</option>
+            <option>Januari</option>
+            <option>Februari</option>
+            <option>Maret</option>
+            <option>April</option>
+            <option>Mei</option>
+            <option>Juni</option>
+            <option>July</option>
+            <option>Agustus</option>
+            <option>Oktober</option>
+            <option>November</option>
+            <option>Desember</option>
+        </select><br>
 		<input type="text" class="form-control" id="lv2" name="level2" placeholder="masukan jumlah lv2"><br>
 		<input type="text" class="form-control" id="lv3" name="level3" placeholder="masukan jumlah lv3"><br>
 		<input type="text" class="form-control" id="lv4" name="level4" placeholder="masukan jumlah lv4"><br>

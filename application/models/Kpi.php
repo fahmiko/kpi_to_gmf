@@ -2,8 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Kpi extends CI_Model {
-	function get_kpi(){
-		return $this->db->get('tb_kpi')->result();
+	function get_table($table){
+		return $this->db->get($table)->result();
+	}
+
+	function get_kpi($object){
+		return $this->db->where('kpi_name',$object)->get('tb_kpi')->result();
 	}
 
 	function get_login($username, $password){
@@ -16,10 +20,15 @@ class Kpi extends CI_Model {
 		return $data;
 	}
 
-	function set_data($object, $table, $id){
+	function set_data($table, $object, $id){
 		if($id == null){
 			$this->db->insert($table, $object);
 		}
+	}
+
+	function delete($table, $column, $id){
+		$this->db->where($column, $id);
+		$this->db->delete($table);
 	}
 
 }

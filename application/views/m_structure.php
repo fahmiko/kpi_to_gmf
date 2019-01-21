@@ -28,12 +28,6 @@ $st = $this->session->userdata('structure');
 	  	<div class="input-group-append">
 	   		<input type="text" class="form-control" value="<?=$st['level2'][$i]['name']?>" readonly="">
 	  	</div>
-	  	<div class="input-group-append">
-	   		<input type="date" class="form-control">
-	  	</div>
-	  	<div class="input-group-append">
-	   		<label class="input-group-text">Date End</label>
-	  	</div>
 	</div>
 	<?php }?>
   </div>
@@ -50,18 +44,11 @@ $st = $this->session->userdata('structure');
 	    	<?php
 				for($j = 0;$j < $st_lv['level']['level2'];$j++){
 					echo $select['level2'][$j];
-
 				}
 			?>
 	  	</select>
 	  	<div class="input-group-append">
 	   		<input type="text" class="form-control" value="<?=$st['level3'][$i]['name']?>" readonly="">
-	  	</div>
-	  	<div class="input-group-append">
-	   		<input type="date" class="form-control">
-	  	</div>
-	  	<div class="input-group-append">
-	   		<label class="input-group-text">Date End</label>
 	  	</div>
 	</div>
 	<?php } ?>
@@ -85,12 +72,6 @@ $st = $this->session->userdata('structure');
 	  	</select>
 	  	<div class="input-group-append">
 	   		<input type="text" class="form-control" value="<?=$st['level4'][$i]['name']?>" readonly="">
-	  	</div>
-	  	<div class="input-group-append">
-	   		<input type="date" class="form-control">
-	  	</div>
-	  	<div class="input-group-append">
-	   		<label class="input-group-text">Date End</label>
 	  	</div>
 	</div>
 	<?php } ?>

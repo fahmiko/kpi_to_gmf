@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>HorTree - jQuery Horizontal Hierarchical Tree</title>
+    <link rel="stylesheet" href="<?=base_url()?>resources/vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?=base_url()?>resources/assets/css/jquery.hortree.css">
+
 </head>
 <body>
 <?php
@@ -34,7 +36,7 @@ $treeData = array (
 
 // echo json_encode($treeData['tree']);
 $treekpi['kpi'] = array (
-    'description' => 'KPI 2019',
+    'description' => $kpi_name,
     'children' => array ()
   );
 $i = 0;
@@ -92,12 +94,12 @@ for($i=0;$i<$row2;$i++){
 // print_r($treekpi['kpi']['children']);
 
 ?>
-
-<div id="my-container"></div>
-<?php
-// echo json_encode($treekpi['kpi']['children'][2]);
-
-?>
+<div id="my-container" style="margin-top: 2px;margin-left: 2px"></div>
+<?=form_open('welcome/delete')?>
+    <input type="hidden" value="<?=$kpi_name?>" name="kpi_name">
+    <input type="submit" value="Delete KPI" class="btn btn-danger"> 
+<?=form_close()?>
+    <a href="<?=site_url()?>welcome/index" class="btn btn-default">Home</a>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
