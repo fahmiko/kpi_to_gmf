@@ -56,6 +56,7 @@ class Welcome extends CI_Controller {
 		$this->kpi->delete('tb_kpi_structure','kpi_name',$kpi);
 		$this->kpi->delete('tb_kpi','kpi_name',$kpi);
 		$this->kpi->delete('tb_kpi_name','kpi_name',$kpi);
+		$this->kpi->delete('tb_kpi_rating','kpi_name',$kpi);
 		redirect('welcome');
 	}
 
@@ -64,56 +65,6 @@ class Welcome extends CI_Controller {
 	}
 
 	public function create_structure(){
-		/*
-		if($this->input->post('structure')!=null){
-			$data['get_level'] = $this->session->userdata('structure_level');
-			$data['structure'] = array(
-				'kpi_name' => $this->input->post('kpi_name'),
-				'level2' => array(),
-				'level3' => array(),
-				'level4' => array()
-			);
-			// Input array level 2
-			for($i = 0;$i < $data['get_level']['level']['level2'];$i++){
-				$data['structure']['level2'] += array(
-					$i => array(
-						'name' => $this->input->post("kpi_lv2_$i"),
-						'weight' => ($this->input->post("weight_lv2_$i")/100)
-					)
-				);
-			}
-			//Input array level 3
-			for($i = 0;$i < $data['get_level']['level']['level3'];$i++){
-				$data['structure']['level3'] += array(
-					$i => array(
-						'name' => $this->input->post("kpi_lv3_$i"),
-						'weight' => ($this->input->post("weight_lv3_$i")/100)
-					)
-				);
-			}
-			//Input array Level 4
-			for($i = 0;$i < $data['get_level']['level']['level4'];$i++){
-				$data['structure']['level4'] += array(
-					$i => array(
-						'name' => $this->input->post("kpi_lv4_$i"),
-						'weight' => ($this->input->post("weight_lv4_$i")/100)
-					)
-				);
-			}
-			$data['select']['level2'] = array();
-			$data['select']['level3'] = array();
-
-			for($i = 0; $i < $data['get_level']['level']['level2'];$i++){
-				$data['select']['level2'][$i] = "<option value='".$data['structure']['level2'][$i]['name']."'>".$data['structure']['level2'][$i]['name']."</option>";
-			}
-
-			for($i = 0; $i < $data['get_level']['level']['level3'];$i++){
-				$data['select']['level3'][$i] = "<option value='".$data['structure']['level3'][$i]['name']."'>".$data['structure']['level3'][$i]['name']."</option>";
-			}
-
-			$this->session->set_userdata('structure',$data['structure']);
-			$this->load->view('m_structure', $data);
-		}else{*/
 			$data = array(
 				'kpi_name' => $this->input->post('kpi_name'),
 				'level2' => $this->input->post('level2'),
@@ -143,10 +94,19 @@ class Welcome extends CI_Controller {
 					'kpi'      => $this->input->post($kpi_lv),
 					'kpi_name' => $structure['kpi_name'],
 					'level'    => $j,
-					'weight'   => $this->input->post($kpi_weight)
+					'weight'   => ($this->input->post($kpi_weight)/100)
 				);
 				$this->kpi->set_data('tb_kpi',$insert, null);
 			}	
+		}
+
+		for($i = 0;$i < $structure['level2'];$i++){
+			$insert = array(
+				'kpi_name' => $structure['kpi_name'],
+				'kpi' => $this->input->post("kpi_lv2_$i"),
+				'kpi_parent' => $structure['kpi_name']
+			);
+			$this->kpi->set_data('tb_kpi_structure',$insert, null);
 		}
 
 		for($j = 3;$j <= 4; $j++){
@@ -157,12 +117,28 @@ class Welcome extends CI_Controller {
 				$insert = array(
 					'kpi_name'	 => $structure['kpi_name'],
 					'kpi'        => $this->input->post($kpi_lv),
-					'kpi_parent' => $this->input->post("parent_lv3_$i")
+					'kpi_parent' => $this->input->post($kpi_parent)
 				);
 				$this->kpi->set_data('tb_kpi_structure',$insert, null);	
 			}	
 		}
 		
+		
+		for($k = 1;$k <= 12; $k++){
+			for($j = 2;$j <= 4; $j++){
+				$lv = "level".$j;
+				for($i = 0;$i < $structure[$lv];$i++){
+					$kpi_lv = "kpi_lv".$j."_".$i;
+					$insert = array(
+						'kpi'      => $this->input->post($kpi_lv),
+						'kpi_name' => $structure['kpi_name'],
+						'month'    => $k
+					);
+					$this->kpi->set_data('tb_kpi_rating',$insert, null);
+				}	
+			}
+		}
+
 		redirect('welcome','refresh');
 	}
 
@@ -178,11 +154,5 @@ class Welcome extends CI_Controller {
 			$this->session->set_userdata($data['kpi']['login']);
 			redirect('welcome/index','refresh');
 		}
-	}
-
-	public function dashboard(){
-		$this->load->view('templates/header');
-		$this->load->view('dashboard');
-		$this->load->view('templates/footer');
 	}
 }

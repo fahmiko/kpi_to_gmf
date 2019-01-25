@@ -12,7 +12,7 @@
     <div class="col-md-4">
       <?php echo form_open('welcome/index')?>
     <select id="kpi_name" class="form-control" name="kpi_name">
-      <option hidden="">Pilih KPI</option>
+      <option hidden="" selected="">Pilih KPI</option>
       <?php
         foreach ($kpi_name as $data) {
           echo "<option value='$data->kpi_name'>$data->kpi_name</option>";
@@ -35,6 +35,7 @@
   </div>
 </div>
 <a href="<?=site_url()?>welcome/create" align="center">Buat KPI</a>
+<a href="<?=site_url()?>">
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 

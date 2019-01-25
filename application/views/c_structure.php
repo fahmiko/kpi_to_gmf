@@ -13,54 +13,63 @@ $structure = $this->session->userdata('structure');
   <hr class="my-4">
   <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
 </div>
-<div class="container-fluid">
+<div class="container">
 <input type="hidden" name="kpi_name" value="<?=$structure['kpi_name']?>">
 <?=form_open('welcome/test')?>
-	<div class="row">
-		<div class="col-md-4">
-			<label>KPI Lv 2</label><br>
-			<?php for($i=0;$i<$structure['level2'];$i++){?>
-				<div class="input-group" style="margin-top: 5px">
-  					<div class="input-group-prepend">
-  					  <span class="input-group-text" id="">KPI & Bobot</span>
-  					</div>
-  					<input type="text" class="form-control" id="kpi_lv2_<?=$i?>" name="kpi_lv2_<?=$i?>">
-  					<input type="text" class="form-control" id="precentage1<?=$i?>" name="weight_lv2_<?=$i?>">
-  					<div class="input-group-append">
-    					<span class="input-group-text">%</span>
-  					</div>
-				</div>
-			<?php }?>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">Struktur</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">KPI Level 2</h5>
+    <?php for($i=0;$i<$structure['level2'];$i++){?>
+		<div class="input-group" style="margin-top: 5px">
+  			<div class="input-group-prepend">
+  			  <span class="input-group-text" id="">KPI & Bobot</span>
+  			</div>
+  			<input type="text" class="form-control" id="kpi_lv2_<?=$i?>" name="kpi_lv2_<?=$i?>">
+  			<input type="text" class="form-control" id="precentage1<?=$i?>" name="weight_lv2_<?=$i?>">
+  			<div class="input-group-append">
+    			<span class="input-group-text">%</span>
+  			</div>
 		</div>
-		<div class="col-md-4">
-			<label>KPI Lv 3</label><br>
-			<?php for($i=0;$i<$structure['level3'];$i++){?>
-				<div class="input-group" style="margin-top: 5px">
-  					<div class="input-group-prepend">
-  					  <span class="input-group-text" id="">KPI & Bobot</span>
-  					</div>
-  					<input type="text" class="form-control" id="kpi_lv3_<?=$i?>" name="kpi_lv3_<?=$i?>">
-  					<input type="text" class="form-control" id="precentage2<?=$i?>" name="weight_lv3_<?=$i?>">
-  					<div class="input-group-append">
-    					<span class="input-group-text">%</span>
-  					</div>
-				</div>
-			<?php }?>		
-		</div>
-		<div class="col-md-4">
-			<label>KPI Lv 4</label><br>
-			<?php for($i=0;$i<$structure['level4'];$i++){?>
-				<div class="input-group" style="margin-top: 5px">
-  					<div class="input-group-prepend">
-  					  <span class="input-group-text" id="">KPI & Bobot</span>
-  					</div>
-  					<input type="text" class="form-control" id="kpi_lv4_<?=$i?>" name="kpi_lv4_<?=$i?>">
-  					<input type="text" class="form-control" id="precentage4<?=$i?>" name="weight_lv4_<?=$i?>">
-  					<div class="input-group-append">
-    					<span class="input-group-text">%</span>
-  					</div>
-				</div>
-			<?php }?>		
+	<?php }?>
+  </div>
+</div>
+<div class="card border-primary mb-3">
+  <div class="card-header">Struktur</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">KPI Level 2</h5>
+	<?php for($i=0;$i<$structure['level3'];$i++){?>
+			<div class="input-group" style="margin-top: 5px">
+  				<div class="input-group-prepend">
+  				  <span class="input-group-text" id="">KPI & Bobot</span>
+  				</div>
+  				<input type="text" class="form-control" id="kpi_lv3_<?=$i?>" name="kpi_lv3_<?=$i?>">
+  				<input type="text" class="form-control" id="precentage2<?=$i?>" name="weight_lv3_<?=$i?>">
+  				<div class="input-group-append">
+    				<span class="input-group-text">%</span>
+  				</div>
+			</div>
+	<?php }?>		
+</div>
+</div>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">Struktur</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">KPI Level 2</h5>
+	<?php for($i=0;$i<$structure['level4'];$i++){?>
+			<div class="input-group" style="margin-top: 5px">
+  				<div class="input-group-prepend">
+  				  <span class="input-group-text" id="">KPI & Bobot</span>
+  				</div>
+  				<input type="text" class="form-control" id="kpi_lv4_<?=$i?>" name="kpi_lv4_<?=$i?>">
+  				<input type="text" class="form-control" id="precentage4<?=$i?>" name="weight_lv4_<?=$i?>">
+  				<div class="input-group-append">
+    				<span class="input-group-text">%</span>
+  				</div>
+			</div>
+	<?php }?>		
 			<br>
 		</div>
 	</div>
@@ -97,7 +106,7 @@ $structure = $this->session->userdata('structure');
 					</div>
 					<div class="input-group mb-1">
   						<div class="input-group-prepend">
-    						<span class="input-group-text" id="basic-addon1" style="width: 100px">Tanggal</span>
+    						<span class="input-group-text" id="basic-addon1" style="width: 100px">Selesai</span>
   						</div>
   						<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
 					</div>
@@ -207,7 +216,7 @@ function generate(){
 		}
 
 	// Lv 3 Structure
-		for($i = 0; $i < $structure['level2']; $i++){?>
+		for($i = 0; $i < $structure['level3']; $i++){?>
 			document.getElementById('svalue_lv3_<?=$i?>').value =  $('#kpi_lv3_<?=$i?>').val();<?php
 			for($j = 0; $j < $structure['level2']; $j++){?>
 				$('#parent_lv_3_<?=$i?>').append(new Option($('#kpi_lv2_<?=$j?>').val(), $('#kpi_lv2_<?=$j?>').val(), true));
@@ -216,7 +225,7 @@ function generate(){
 	?>
 	// Lv 4 structure
 	<?php
-		for($i = 0; $i < $structure['level3']; $i++){?>
+		for($i = 0; $i < $structure['level4']; $i++){?>
 			document.getElementById('svalue_lv4_<?=$i?>').value =  $('#kpi_lv4_<?=$i?>').val();<?php
 			for($j = 0; $j < $structure['level3']; $j++){?>
 				$('#parent_lv_4_<?=$i?>').append(new Option($('#kpi_lv3_<?=$j?>').val(), $('#kpi_lv3_<?=$j?>').val(), true));
