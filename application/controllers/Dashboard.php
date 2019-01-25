@@ -9,8 +9,7 @@ class Dashboard extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	public function index()
-	{
+	public function index(){
 		if($this->input->post('month')){
 			$data['month'] = $this->input->post('month');
 			$data['ikpi'] = $this->kpi->get_ikpi($this->input->post('month'),$this->input->post('kpi'));

@@ -15,6 +15,13 @@ class Kpi extends CI_Model {
 		return $this->db->where('kpi_name',$object)->get('tb_kpi')->result();
 	}
 
+	function get_kpi_chart($kpi_name){
+		return $this->db->where('kpi_name',$kpi_name)
+						->where('level', 2)
+						->get('tb_kpi')
+						->result();	
+	}
+
 	function get_login($username, $password){
 		$this->db->select('users.*, tb_pegawai.*');
 		$this->db->from('users');

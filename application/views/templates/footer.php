@@ -1,47 +1,43 @@
-    <script src="<?=base_url()?>resources/vendors/jquery/dist/jquery.min.js"></script>
-    <script src="<?=base_url()?>resources/vendors/popper.js/dist/umd/popper.min.js"></script>
-    <script src="<?=base_url()?>resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="<?=base_url()?>resources/assets/js/main.js"></script>
+<div class="row-fluid">
+  <div id="footer" class="span12"> 2012 &copy; Marutii Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+</div>
 
+<script src="<?=base_url()?>resources/js/excanvas.min.js"></script> 
+<script src="<?=base_url()?>resources/js/jquery.min.js"></script> 
+<script src="<?=base_url()?>resources/js/jquery.dataTables.min.js"></script>
+<script src="<?=base_url()?>resources/js/jquery.ui.custom.js"></script> 
+<script src="<?=base_url()?>resources/js/bootstrap.min.js"></script> 
+<script src="<?=base_url()?>resources/js/jquery.flot.min.js"></script> 
+<script src="<?=base_url()?>resources/js/jquery.flot.resize.min.js"></script> 
+<script src="<?=base_url()?>resources/js/jquery.peity.min.js"></script> 
+<script src="<?=base_url()?>resources/js/fullcalendar.min.js"></script> 
+<script src="<?=base_url()?>resources/js/maruti.js"></script> 
+<script src="<?=base_url()?>resources/js/maruti.dashboard.js"></script> 
+<script src="<?=base_url()?>resources/js/maruti.chat.js"></script> 
 
-    <script src="<?=base_url()?>resources/vendors/chart.js/dist/Chart.bundle.min.js"></script>
-    <script src="<?=base_url()?>resources/assets/js/dashboard.js"></script>
-    <script src="<?=base_url()?>resources/assets/js/widgets.js"></script>
-    <script src="<?=base_url()?>resources/vendors/jqvmap/dist/jquery.vmap.min.js"></script>
-    <script src="<?=base_url()?>resources/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-    <script src="<?=base_url()?>resources/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script type="text/javascript">
+  // This function is called from the pop-up menus to transfer to
+  // a different page. Ignore if the value returned is a null string:
+  function goPage (newURL) {
 
-    <!--  flot-chart js -->
-    <script src="<?=base_url()?>resources/vendors/flot/excanvas.min.js"></script>
-    <script src="<?=base_url()?>resources/vendors/flot/jquery.flot.js"></script>
-    <script src="<?=base_url()?>resources/vendors/flot/jquery.flot.pie.js"></script>
-    <script src="<?=base_url()?>resources/vendors/flot/jquery.flot.time.js"></script>
-    <script src="<?=base_url()?>resources/vendors/flot/jquery.flot.stack.js"></script>
-    <script src="<?=base_url()?>resources/vendors/flot/jquery.flot.resize.js"></script>
-    <script src="<?=base_url()?>resources/vendors/flot/jquery.flot.crosshair.js"></script>
-    <script src="<?=base_url()?>resources/assets/js/init-scripts/flot-chart/curvedLines.js"></script>
-    <script src="<?=base_url()?>resources/assets/js/init-scripts/flot-chart/flot-tooltip/jquery.flot.tooltip.min.js"></script>
-    <script src="<?=base_url()?>resources/assets/js/init-scripts/flot-chart/flot-chart-init.js"></script>
+      // if url is empty, skip the menu dividers and reset the menu selection to default
+      if (newURL != "") {
+      
+          // if url is "-", it is this page -- reset the menu:
+          if (newURL == "-" ) {
+              resetMenu();            
+          } 
+          // else, send page to designated URL            
+          else {  
+            document.location.href = newURL;
+          }
+      }
+  }
 
-    <script>
-        (function($) {
-            "use strict";
-
-            jQuery('#vmap').vectorMap({
-                map: 'world_en',
-                backgroundColor: null,
-                color: '#ffffff',
-                hoverOpacity: 0.7,
-                selectedColor: '#1de9b6',
-                enableZoom: true,
-                showTooltip: true,
-                values: sample_data,
-                scaleColors: ['#1de9b6', '#03a9f5'],
-                normalizeFunction: 'polynomial'
-            });
-        })(jQuery);
-    </script>
-
+// resets the menu selection upon entry to this page:
+function resetMenu() {
+   document.gomenu.selector.selectedIndex = 2;
+}
+</script>
 </body>
-
 </html>

@@ -23,6 +23,7 @@ class Welcome extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('kpi');
+		date_default_timezone_set('Asia/Jakarta');
 		if(empty($this->session->userdata('login'))){
 
 		}
@@ -30,16 +31,11 @@ class Welcome extends CI_Controller {
 
 	public function index()
 	{
-		$data['kpi_name'] = $this->kpi->get_table('tb_kpi_name');
-		if($this->input->post('kpi_name')!=null){
-			$data['kpi'] = $this->kpi->get_kpi($this->input->post('kpi_name'));
-			$data['kpi_index'] = $this->input->post('kpi_name');
-		}else{
-			$data['kpi_index'] = "NO DATA";
-		}
-		// $this->load->view('templates/header');
+		$data['kpi'] = $this->kpi->get_kpi_chart(date('Y'));
+		$data['kpi_all'] = $this->kpi->get_kpi(date('Y'));
+		$this->load->view('templates/header');
 		$this->load->view('dashboard', $data);
-		// $this->load->view('templates/footer');
+		$this->load->view('templates/footer');
 	}
 
 	public function show(){
