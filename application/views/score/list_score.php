@@ -66,7 +66,11 @@
 			<table id="dt_table" class="table table-bordered">
 				<thead>
 				<tr>
-					<th align="center" style="text-align: center;">Action</th>
+					<?php
+					if($skpi_name->status == "on progress"){
+						echo '<th align="center" style="text-align: center;width:30px">Action</th>';
+					}
+					?>
 					<th align="center" style="text-align: center;">KPI</th>
 					<th align="center" style="text-align: center;">Bobot</th>
 					<th align="center" style="text-align: center;">Target</th>
@@ -77,13 +81,16 @@
 				<tbody>
 			<?php foreach ($ikpi_all as $data): ?>
 				<tr>
-					<td align="center" style="width: 30px">
 					<?php 
-					foreach ($ikpi as $row):
-						if(($data->kpi == $row->kpi) && ($skpi_name->status == "on progress")){?>
+					if($skpi_name->status == "on progress"){
+						echo "<td align='center'>";
+						foreach ($ikpi as $row):
+						if($data->kpi == $row->kpi){?>
 							<a href="#" onclick="generateModal(<?=$data->kpi_id?>)" data-target="#manageModal" data-toggle="modal"  class="btn btn-primary btn-sm" style="color: white;"><span class="fa fa-pencil-square-o"></span></a><?php 
-					}endforeach; ?>
-					</td>
+						}
+					endforeach;
+					echo "</td>";
+					}?>
 					<td><?=$data->kpi?></td>
 					<td><?=($data->weight)*100?></td>
 					<td><?=$data->target?></td>

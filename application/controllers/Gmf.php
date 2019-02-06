@@ -77,8 +77,9 @@ class Gmf extends CI_Controller {
 	}
 
 	public function update_kpi(){
-		
-
+		$kpi = urldecode($this->uri->segment(3));
+		$this->kpi->set_data(array('column'=>'kpi_name','table'=>'tb_kpi_name'), array('status'=>'finish'), $kpi);
+		redirect('gmf/list');
 	}
 
 	public function list(){

@@ -34,7 +34,7 @@
                   <?php foreach ($kpi as $data):?>
                     <tr>
                       <td align="center">
-                        <a href="#" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>
+                        <a href="<?=site_url()?>gmf/update_kpi/<?=urlencode($data->kpi_name)?>" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>
                         <a href="<?=site_url()?>gmf/delete/<?=urlencode($data->kpi_name)?>" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
                       <td><?=$data->kpi_name?></td>
                       <td><?=$data->created_by?></td>
