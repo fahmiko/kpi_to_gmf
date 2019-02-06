@@ -1,104 +1,246 @@
-  <div id="content">
-    <div id="content-header">
-      <div id="breadcrumb"> <a href="#" title="Dashboard KPI"><i class="icon-home"></i> Home</a></div>
-    </div>
-    <div class="container">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Dashboard
+        <small>Control panel</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>KPI</h3>
+
+              <p><?=sizeof($tb_kpi_name)?> KPI Registered</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-dashboard"></i>
+            </div>
+            <a href="#" class="small-box-footer" id="select-kpi">Select KPI <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+              <p>Bounce Rate</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3><?=sizeof($tb_employee)?></h3>
+
+              <p>Employee Registered</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="<?=site_url()?>gmf/employee" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>65</h3>
+
+              <p>Unique Visitors</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      
+      <!-- Content -->
       <div class="row">
         <div class="col-md-6">
-            <div class="span6">
-            <div class="widget-box">
-              <div class="widget-title"> <span class="icon"> <i class="icon-tasks"></i> </span>
-                <h5>Data KPI <?=date('Y')?></h5>
-              </div>
-              <div class="widget-content">
-                    <table id="tb_kpi" class="table table-bordered">
-                        <thead>
-                          <tr>
-                              <th>KPI</th>
-                              <th>Bobot</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php foreach($kpi_all as $data):?>
-                          <tr>
-                            <td><?=$data->kpi?></td>
-                            <td><?=$data->weight?></td>
-                          </tr>
-                          <?php endforeach ?>
-                        </tbody>
-                    </table>
+          <!-- Line chart -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <i class="fa fa-pie-chart"></i>
+
+              <h3 class="box-title">Chart KPI</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
             </div>
+            <div class="box-body">
+              <?php if($kpi == null) {
+                echo "<center>NO DATA</center>";
+              }else{ ?>
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+              <?php } ?>
+            </div>
+            <!-- /.box-body-->
           </div>
         </div>
+        <!-- /.col -->
+
         <div class="col-md-6">
-          <div class="span6">
-            <div class="widget-box">
-              <div class="widget-title"> <span class="icon"> <i class="icon-tasks"></i> </span>
-                <h5>Grafik Chark KPI <?=date('Y')?></h5>
+          <!-- Bar chart -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <i class="fa fa-table"></i>
+
+              <h3 class="box-title">Data KPI</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
-              <div class="widget-content">
-                <div id="piechart" align="center"></div>
-                <?php
-                  if($kpi == null){
-                    echo "<center>NO DATA</center>";
-                  }
-                ?>
             </div>
+            <div class="box-body">
+              <?php if($kpi == null) {
+                echo "<center>NO DATA</center>";
+              }else{ ?>
+              <table id="dashboard_1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>KPI</th>
+                    <th>PIC</th>
+                    <th>Target</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($kpi as $data):?>
+                    <tr>
+                      <td><?=$data->kpi?></td>
+                      <td><?=$data->pic?></td>
+                      <td><?=$data->target?></td>
+                    </tr>
+                  <?php endforeach ?>
+                </tbody>
+              </table>
+            <?php } ?>
             </div>
           </div>
+          <!-- /.box -->
         </div>
-        <div class="col-md-12">
-          <div class="span12">
-            <div class="widget-box">
-              <div class="widget-title"> <span class="icon"> <i class="icon-tasks"></i> </span>
-               <h5>Data KPI <?=date('Y')?></h5>
-              </div>
-              <div class="widget-content">
-                      
-              </div>
+
+        <!-- /.col -->
+      </div>
+                <!-- /.box -->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Structure KPI</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <?php if($kpi == null) {
+            echo "<center>NO DATA</center>";
+          }else{ ?>
+            <div id="my-container" style="margin-top: 2px;"></div>
+          <?php } ?>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+      <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Progress month <?=$month?></h3>
             </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <?php if($kpi == null) {
+                echo "<center>NO DATA</center>";
+              }else{ ?>
+              <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th rowspan="2">KPI</th>
+                  <th rowspan="2">Bobot</th>
+                  <th colspan="2" style="text-align: center;">Hasil</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <th>Nilai</th>
+                    <th>Skor</th>
+                  </tr>
+                  <?php foreach ($nilai_kpi as $data) :?>
+                    <tr>
+                    <td><?=$data->kpi?></td>
+                    <td><?=($data->weight)*100?>%</td>
+                    <td><?=($data->skor/$data->weight)?></td>
+                    <td><?=$data->skor?></td>
+                  <?php endforeach ?>
+                  </tr>
+                </tbody>
+              </table>
+            <?php }?>
+            </div>
+            <!-- /.box-body -->
           </div>
-        </div>
+
+      <!-- Content -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- Modal select KPI -->
+  <div class="modal modal-default fade" id="modal-select-kpi">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Pilih KPI</h4>
       </div>
-      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          	<div class="input-group-addon">
+             	<i class="fa fa-indent"></i>
+            </div>
+            <div class="input-group input-group-md">
+            <form method="get" action="<?=site_url()?>gmf/index">
+                <select name="select-kpi" id="select-kpi-option" class="form-control" style="width: 180px">
+                	<option hidden="">--Pilih KPI--</option>
+                </select>
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-info btn-flat">Go!</button>
+                    </span>
+              </div>
+          </form>
+         </div>
       </div>
     </div>
-    </div>
- </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-<script src="<?=base_url()?>resources/js/loader.js"></script>
-
-<script type="text/javascript">
-// Load google charts
-
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-
-// Draw the chart and set the chart values
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-  ['Task', 'Hours per Day'],
-  <?php foreach ($kpi as $data) {?>
-  ['<?=$data->kpi?>',parseFloat(<?=(float)$data->weight?>)],
-  <?php } ?>
-]);
-
-  // Optional; add a title and set the width and height of the chart
-  var options = {'title':'KPI <?=date('Y')?>',
-                 'legend':'left',
-                 'is3D':true,
-                 'width':550, 
-                 'height':400};
-
-  // Display the chart inside the <div> element with id="piechart"
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-  chart.draw(data, options);
-  google.visualization.events.addListener(chart, 'select', selectHandler);
-}
-$(document).ready(function () {
-    $('#tb_kpi').DataTable();
-} );
-</script>
-</body>
-</html>
+<script src="<?=base_url()?>lte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?=base_url()?>lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
