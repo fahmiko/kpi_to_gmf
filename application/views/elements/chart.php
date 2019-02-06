@@ -4,7 +4,7 @@ window.onload = function () {
 var options = {
     theme: "light2",
     title: {
-        text: "Chart KPI <?=date('Y')?>"
+        text: "Chart KPI "
     },
     animationEnabled: true,
     data: [{

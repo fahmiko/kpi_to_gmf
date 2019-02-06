@@ -69,6 +69,7 @@
 					<th align="center" style="text-align: center;">Action</th>
 					<th align="center" style="text-align: center;">KPI</th>
 					<th align="center" style="text-align: center;">Bobot</th>
+					<th align="center" style="text-align: center;">Target</th>
 					<th align="center" style="text-align: center;">Nilai</th>
 					<th align="center" style="text-align: center;">Skor</th>
 				</tr>
@@ -77,13 +78,15 @@
 			<?php foreach ($ikpi_all as $data): ?>
 				<tr>
 					<td align="center" style="width: 30px">
-					<?php foreach ($ikpi as $row):
-						if($data->kpi == $row->kpi){?>
+					<?php 
+					foreach ($ikpi as $row):
+						if(($data->kpi == $row->kpi) && ($skpi_name->status == "on progress")){?>
 							<a href="#" onclick="generateModal(<?=$data->kpi_id?>)" data-target="#manageModal" data-toggle="modal"  class="btn btn-primary btn-sm" style="color: white;"><span class="fa fa-pencil-square-o"></span></a><?php 
 					}endforeach; ?>
 					</td>
 					<td><?=$data->kpi?></td>
-					<td><?=($data->weight)*100?>%</td>
+					<td><?=($data->weight)*100?></td>
+					<td><?=$data->target?></td>
 					<td><?=($data->skor/$data->weight)?></td>
 					<td><?=$data->skor?></td>
 				</tr>
@@ -126,12 +129,13 @@
 				<input type="text" class="form-control" name="weight" id="bobot" readonly="">
 			</div>
 			<div class="form-group">
-				<label>Penilaian</label>
-				<input type="number" class="form-control" name="nilai" id="nilai" placeholder="Nilai" oninput="generateScore()" required="">
+				<label>Actual</label>
+				<input type="number" class="form-control" name="nilai" id="nilai" placeholder="Nilai Actual" oninput="generateScore()" required="">
 			</div>
 			<div class="form-group">
 				<label>Skor</label>
 				<input type="text" class="form-control" name="skor" id="skor" readonly="">
+				<input type="hidden" id="target">
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		<?=form_close()?>
@@ -155,13 +159,14 @@
         success: function(data){
         	document.getElementById('kpi_name').value = data.kpi_name;
         	document.getElementById('kpi').value = data.kpi;
-        	document.getElementById('bobot').value = data.weight;
+        	document.getElementById('bobot').value = data.target;
+        	document.getElementById('target').value = (data.target/100);
         	}
     	});
 	}
 
 	function generateScore(){
-		var bobot = $('#bobot').val();
+		var bobot = $('#target').val();
 		var nilai = $('#nilai').val();
 		var skor;
 		skor = nilai*bobot;

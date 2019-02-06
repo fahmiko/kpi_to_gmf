@@ -76,6 +76,11 @@ class Gmf extends CI_Controller {
 		redirect('gmf/list');
 	}
 
+	public function update_kpi(){
+		
+
+	}
+
 	public function list(){
 		$this->check_session();
 		$data['kpi'] = $this->kpi->get_table('tb_kpi_name');
@@ -103,11 +108,13 @@ class Gmf extends CI_Controller {
 			$this->form_validation->set_rules('month', 'Month', 'required');
 			if ($this->form_validation->run() == FALSE) {
 				$data['month'] = intval(date('m'));
+				$data['skpi_name'] = $this->kpi->get_single("tb_kpi_name", "kpi_name", $this->session->userdata('dashboard'));
 				$data['ikpi'] = $this->kpi->get_ikpi($data['month'],$this->session->userdata('dashboard'));
 				$data['ikpi_all'] = $this->kpi->get_ikpi_all($data['month'],$this->session->userdata('dashboard'));
 				$data['score_kpi'] = $this->kpi->get_score_kpi_name($data['month'],$this->session->userdata('dashboard'));
 			} else {
 				$data['month'] = $this->input->post('month');
+				$data['skpi_name'] = $this->kpi->get_single("tb_kpi_name", "kpi_name", $this->input->post('kpi'));
 				$data['ikpi'] = $this->kpi->get_ikpi($this->input->post('month'),$this->input->post('kpi'));
 				$data['ikpi_all'] = $this->kpi->get_ikpi_all($this->input->post('month'),$this->input->post('kpi'));
 				$data['score_kpi'] = $this->kpi->get_score_kpi_name($this->input->post('month'),$this->input->post('kpi'));

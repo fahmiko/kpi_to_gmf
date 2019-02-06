@@ -23,17 +23,34 @@
               <table id="dt_employee" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th width="40px">Action</th>
+                  <th width="60px">Action</th>
                   <th>KPI Name</th>
                   <th>Created By</th>
+                  <th>Status</th>
+                  <th>Nilai</th>
                 </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($kpi as $data):?>
                     <tr>
-                      <td><a href="<?=site_url()?>gmf/delete/<?=urlencode($data->kpi_name)?>" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</a></td>
+                      <td align="center">
+                        <a href="#" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>
+                        <a href="<?=site_url()?>gmf/delete/<?=urlencode($data->kpi_name)?>" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
                       <td><?=$data->kpi_name?></td>
                       <td><?=$data->created_by?></td>
+                      <td>
+                      <?php echo($data->status == 'finish')? "<span class='label label-success'>finish</span>":"<span class='label label-primary'>on progress</span>";?>
+                      </td>
+                      <td>
+                        <?php
+                          $nilai = 0;
+                          for($i = 1; $i<=intval(date('m'));$i++){
+                            $score = $this->kpi->get_score_kpi_name($i,$data->kpi_name);
+                            $nilai += $score['total'];
+                          }
+                          echo ($nilai/intval(date('m')));
+                        ?>
+                      </td>
                     </tr>
                   <?php endforeach ?>
                 </tbody>

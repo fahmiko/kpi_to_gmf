@@ -1,6 +1,6 @@
 <?php
 $treekpi['kpi'] = array (
-    'description' => date('Y'),
+    'description' => @$this->session->userdata('dashboard'),
     'children' => array ()
   );
 $i = 0;
@@ -41,7 +41,7 @@ for($i = 0;$i < $row_lv2;$i++){
     $num = count($treekpi['kpi']['children'][$i]['children']);
     for($j = 0; $j < $num;$j++){
         $parent = $treekpi['kpi']['children'][$i]['children'][$j]['description'];
-        $result = $this->db->where('kpi_parent',$parent)->where('kpi_name',date('Y'))->get('tb_kpi_structure');
+        $result = $this->db->where('kpi_parent',$parent)->get('tb_kpi_structure');
         if($result->num_rows()!=0){
             $k = 0;
             foreach ($result->result() as $data) {
