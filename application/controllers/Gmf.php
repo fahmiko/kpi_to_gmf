@@ -180,12 +180,8 @@ class Gmf extends CI_Controller {
 					'id_pegawai' => $this->input->post('id_pegawai'),
 					'nama' => $this->input->post('nama'),
 					'password' => md5($this->input->post('password')),
-					'jabatan' => $this->input->post('jabatan')
-				);
-				// Data Insert User
-				$data['query_user'] = array(
-					'username' => $this->input->post('username'),
-					'id_pegawai' => $this->input->post('id_pegawai')
+					'jabatan' => $this->input->post('jabatan'),
+					'status' => $this->input->post('akses')
 				);
 				// Insert User & Pegawai
 				$this->kpi->set_data('tb_pegawai',$data['query'],null);

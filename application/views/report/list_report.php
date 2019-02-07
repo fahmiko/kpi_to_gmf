@@ -35,6 +35,10 @@
             	
               <br>
               <!-- Table Report -->
+              <?php if($report == null){
+                  echo "NO DATA, SELECT KPI";
+                }else{
+                ?>
                   <table class="table table-bordered">
                     <tr>
                       <th rowspan="2" style="vertical-align: middle;">NO</th>
@@ -68,7 +72,9 @@
                       ?>
 
   
-                </table><br><br>
+                </table>
+                <?php }?>
+                <br><br>
               </div>
             </div>
           </div>

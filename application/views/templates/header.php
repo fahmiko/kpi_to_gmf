@@ -94,7 +94,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
         </div>
         <div class="pull-left info">
           <p><?=$login['nama']?></p>
-          <a href="#"><i class="fa fa-circle" style="color: #<?=$color['status']?>"></i> <?=$login['jabatan']?></a>
+          <a href="#"><i class="fa fa-circle" style="color: #<?=$color['status']?>"></i> <?=$login['jabatan']?> (<?=$login['status']?>)</a>
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->

@@ -36,26 +36,38 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <a class="btn btn-default" style="margin-bottom: 10px" onclick="create()"><span class="fa fa-plus"></span> Pegawai</a>
+              <?php if($this->session->userdata('login')['status'] == 'admin') { ?>
+                <a class="btn btn-default" style="margin-bottom: 10px" onclick="create()"><span class="fa fa-plus"></span> Pegawai</a>
+              <?php }?>
               <table id="dt_employee" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th width="40px">Action</th>
+                  <?php if($this->session->userdata('login')['status'] == 'admin') { ?>
+                    <th width="40px">Action</th>
+                  <?php }?>
                   <th>ID Pegawai</th>
                   <th>Nama Pegawai</th>
                   <th>Jabatan</th>
+                  <?php if($this->session->userdata('login')['status'] == 'admin') { ?>
+                    <th>Hak Akses</th>
+                  <?php }?>
                 </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($employee as $data):?>
                     <tr>
+                      <?php if($this->session->userdata('login')['status'] == 'admin') { ?>
                       <td align="center">
                         <a href="#" onclick="edit_employee('<?=$data->id_pegawai?>','<?=$data->nama?>','<?=$data->jabatan?>')"><span class="fa fa-pencil"></span></a>
                         <a href="#" onclick="delete_employee('<?=$data->id_pegawai?>','<?=$data->nama?>','<?=$data->jabatan?>')"><span class="fa fa-trash"></span></a>
                       </td>
+                      <?php }?>
                       <td><?=$data->id_pegawai?></td>
                       <td><?=$data->nama?></td>
                       <td><?=$data->jabatan?></td>
+                      <?php if($this->session->userdata('login')['status'] == 'admin') { ?>
+                          <td><?=$data->status?></td>
+                      <?php }?>
                     </tr>
                   <?php endforeach ?>
                 </tbody>
@@ -98,7 +110,14 @@
         <div class="form-group" id="lb_password">
             <label>Password</label>
             <input type="password" name="password" class="form-control" required="" placeholder="Password">
-          </div>
+        </div>
+        <div class="form-group" id="akses">
+            <label>Hak Ases</label>
+            <select name="akses" class="form-control" id="akses-select">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+        </div>
       </div>
       <input type="hidden" name="manage" id="manage">
       <div class="modal-footer">
@@ -127,6 +146,7 @@
     $("#jabatan-text").hide();
     $("#jabatan-select").show();
     $("#lb_password").show();
+    $('#akses').show();
     // change CSS 
     $("#employee-modal").removeClass();
     $("#btn-manage").removeClass();
@@ -148,6 +168,7 @@
      $("#jabatan-text").hide();
      $("#jabatan-select").show();
      $("#lb_password").hide();
+     $('#akses').hide();
      // change CSS 
      $("#employee-modal").removeClass();
      $("#btn-manage").removeClass();
@@ -169,6 +190,7 @@
      $("#jabatan-text").show();
      $("#jabatan-select").hide();
      $("#lb_password").hide();
+     $('#akses').hide();
      // change CSS 
      $("#employee-modal").removeClass();
      $("#employee-modal").addClass('modal modal-danger fade');
