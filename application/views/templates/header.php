@@ -1,5 +1,7 @@
 <?php
 $login = $this->session->userdata('login');
+$color = $this->session->userdata('color');
+$initial = strtoupper(substr($login['nama'], 0,2));
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,6 +48,20 @@ $login = $this->session->userdata('login');
   <![endif]-->
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <style type="text/css">
+    .circle-text {
+        display: inherit;
+        height: 55px; /*change this and the width
+        for the size of your initial circle*/
+        width: 55px;
+        border-radius: 50%;
+        /*make it pretty*/
+        background: #<?=$color['bg']?>;
+
+        font-size: 35px;
+        color: #fff;
+        }
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -74,11 +90,11 @@ $login = $this->session->userdata('login');
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?=base_url()?>lte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <div class="circle-text" style="text-align: center;vertical-align: middle;"><?=$initial?></div>
         </div>
         <div class="pull-left info">
           <p><?=$login['nama']?></p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"><i class="fa fa-circle" style="color: #<?=$color['status']?>"></i> <?=$login['jabatan']?></a>
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->

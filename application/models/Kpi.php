@@ -8,7 +8,7 @@ class Kpi extends CI_Model {
 
 	function get_table_where($table, $column, $id){
 		$this->db->where($column, $id);
-		return $this->db->get($table)->row();
+		return $this->db->get($table)->result();
 	}
 
 	function get_single($table, $column, $id){
@@ -22,6 +22,14 @@ class Kpi extends CI_Model {
 
 	function get_kpi($object){
 		return $this->db->where('kpi_name',$object)->get('tb_kpi')->result();
+	}
+
+	function get_target_kpi($kpi_name,$kpi){
+		return $this->db->where('kpi_name',$kpi_name)->where('kpi',$kpi)->get('tb_kpi')->row();
+	}
+
+	function get_join_kpi_score(){
+
 	}
 
 	function get_login($username, $password){
@@ -54,6 +62,25 @@ class Kpi extends CI_Model {
 		$this->db->update('tb_kpi_score', array('skor' => $skor));
 	}
 
+	function get_report($kpi_name,$month){
+		return $this->db->query("SELECT tk.*,ts.* FROM tb_kpi tk 
+								LEFT JOIN tb_kpi_score ts 
+								ON tk.kpi = ts.kpi 
+								WHERE ts.`month` = $month
+								AND tk.kpi_name = '$kpi_name'
+								AND tk.`level` = 2")->result();
+	}
+
+	function get_report_ytd($kpi_name,$month){
+		return $this->db->query("SELECT sum(ts.skor/$month) as avg FROM tb_kpi tk 
+								LEFT JOIN tb_kpi_score ts 
+								ON tk.kpi = ts.kpi 
+								WHERE ts.`month` <= $month
+								AND tk.kpi_name = '$kpi_name'
+								AND tk.`level` = 2
+								GROUP BY ts.kpi")->result();
+	}
+
 	function get_ikpi($month, $kpi){
 		return $this->db->query("SELECT k.*,r.month,r.skor from tb_kpi_score r
 								LEFT JOIN tb_kpi k on r.kpi = k.kpi
@@ -71,7 +98,7 @@ class Kpi extends CI_Model {
 	}
 
 	function get_score_parent($kpi_name, $month){
-		return $this->db->query("SELECT ts.kpi_parent, sum(r.skor*tk.weight) AS total FROM tb_kpi tk 
+		return $this->db->query("SELECT ts.kpi_parent, sum(r.skor*(tk.target)/100) AS total FROM tb_kpi tk 
 								 JOIN tb_kpi_structure ts on tk.kpi = ts.kpi LEFT JOIN tb_kpi_score r ON tk.kpi = r.kpi 
 								 WHERE r.month = '$month' AND ts.kpi_parent != '$kpi_name'
 								 GROUP BY ts.kpi_parent")->result();

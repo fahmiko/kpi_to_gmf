@@ -1,3 +1,14 @@
+<style type="text/css">
+  th{
+    color: white;
+    background-color: gray;
+    text-align: center;
+    vertical-align: middle;
+  }
+  td{
+    text-align: center;
+  }
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -20,43 +31,45 @@
             </div>
             <!-- /.box-header -->
             <?=form_open('gmf/score')?>
-            <div class="box-body">
-            	<div class="row">
-            		<div class="col-md-2">
-                  <div class="input-group-prepend">
-                  <span class="input-group-text" id="">Cari KPI</span>
+            <div class="box-body" style="margin:10px">
+            	
+              <br>
+              <!-- Table Report -->
+                  <table class="table table-bordered">
+                    <tr>
+                      <th rowspan="2" style="vertical-align: middle;">NO</th>
+                      <th rowspan="2" style="vertical-align: middle;">KPI</th>
+                      <th colspan="2"><?=DateTime::createFromFormat('!m', intval(date('m')))->format('F')?></th>
+                      <th colspan="2">YTD <?=DateTime::createFromFormat('!m', intval(date('m')))->format('F')?></th>
+                    </tr>
+                    <tr>
+                      <th width="15%">Target</th>
+                      <th width="15%">Act</th>
+                      <th width="15%">Target</th>
+                      <th width="15%">Act</th>
+                    </tr>
+                      <?php
+                        $no = 1;
+                        $row = 0;
+                        foreach ($report as $data) {
+                          if($data->month == intval(date('m'))){?>
+                            <tr>
+                              <td><?=$no?></td>
+                              <td style="text-align: left;"><?=$data->kpi?></td>
+                              <td><?=$data->target?>%</td>
+                              <td style="background-color: <?=($data->skor >= $data->target) ? '#00FF00' : '#CC1559'?>"><?=$data->skor?>%</td>
+                              <td><?=$data->target?>%</td>
+                              <td style="background-color: <?=($report_all[$row]->avg >= $data->target) ? '#00FF00' : '#CC1559'?>"><?=number_format($report_all[$row]->avg,1)?></td>
+                            </tr>
+                            <?php
+                            $no++;
+                          }
+                        }
+                      ?>
+
+  
+                </table><br><br>
               </div>
-                  <div class="input-group input-group-sm">
-                <select class="form-control" name="kpi" style="width: 200%">
-                  <?php 
-                  if($kpi_name == null){
-                    echo "<option>NO DATA</option>";
-                  }
-                  foreach ($kpi_name as $data): ?>
-                    <option value="<?=$data->kpi_name?>"><?=$data->kpi_name?></option>
-                  <?php endforeach; ?>
-                </select>
-            </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="input-group-prepend">
-                  <span class="input-group-text" id="">Cari KPI</span>
-              </div>
-                  <div class="input-group input-group-sm">
-                      <select class="form-control" name="month">
-                  <?php 
-                    for($i = 1;$i<=12;$i++){
-                      $dateObj   = DateTime::createFromFormat('!m', intval($i));?>
-                      <option value="<?=$i?>" <?=(intval(date('m')) == $i) ? "selected" : ""?>><?=$dateObj->format('F')?></option>
-                    <?php }
-                  ?>
-              </select>
-                        <span class="input-group-btn">
-                            <button type="submit" class="btn btn-info btn-flat">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            	</div>
             </div>
           </div>
         </div>

@@ -1,3 +1,6 @@
+<?php
+$login = $this->session->userdata('login');
+?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -74,7 +77,7 @@
 					<th align="center" style="text-align: center;">KPI</th>
 					<th align="center" style="text-align: center;">Bobot</th>
 					<th align="center" style="text-align: center;">Target</th>
-					<th align="center" style="text-align: center;">Nilai</th>
+					<th align="center" style="text-align: center;">Actual</th>
 					<th align="center" style="text-align: center;">Skor</th>
 				</tr>
 				</thead>
@@ -85,7 +88,7 @@
 					if($skpi_name->status == "on progress"){
 						echo "<td align='center'>";
 						foreach ($ikpi as $row):
-						if($data->kpi == $row->kpi){?>
+						if(($data->kpi == $row->kpi) && ($data->pic == $login['id_pegawai'])){?>
 							<a href="#" onclick="generateModal(<?=$data->kpi_id?>)" data-target="#manageModal" data-toggle="modal"  class="btn btn-primary btn-sm" style="color: white;"><span class="fa fa-pencil-square-o"></span></a><?php 
 						}
 					endforeach;
@@ -94,8 +97,8 @@
 					<td><?=$data->kpi?></td>
 					<td><?=($data->weight)*100?></td>
 					<td><?=$data->target?></td>
-					<td><?=($data->skor/$data->weight)?></td>
 					<td><?=$data->skor?></td>
+					<td><?=($data->target*$data->skor)/100?></td>
 				</tr>
 			<?php endforeach; ?>
 				</tbody>
@@ -132,12 +135,12 @@
 				<input type="text" class="form-control" name="kpi" id="kpi" readonly="">
 			</div>
 			<div class="form-group">
-				<label>Bobot</label>
+				<label>Target</label>
 				<input type="text" class="form-control" name="weight" id="bobot" readonly="">
 			</div>
 			<div class="form-group">
 				<label>Actual</label>
-				<input type="number" class="form-control" name="nilai" id="nilai" placeholder="Nilai Actual" oninput="generateScore()" required="">
+				<input type="text" class="form-control" name="nilai" id="nilai" placeholder="Nilai Actual" oninput="generateScore()" required="">
 			</div>
 			<div class="form-group">
 				<label>Skor</label>

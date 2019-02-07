@@ -97,11 +97,13 @@ class Gmf extends CI_Controller {
 			$kpi = $this->input->post('kpi');
 			$kpi_name = $this->input->post('kpi_name');
 			$month = $this->input->post('month');
-			$skor = $this->input->post('skor');
-			$this->kpi->insert_score($kpi, $kpi_name, $month, $skor);
-			$data['parent'] = $this->kpi->get_score_parent($kpi_name, $month);
-			foreach ($data['parent'] as $row) {
-				$this->kpi->insert_score($row->kpi_parent, $kpi_name, $month, $row->total);
+			$skor = $this->input->post('nilai');
+			for($i = 0;$i<2;$i++){
+				$this->kpi->insert_score($kpi, $kpi_name, $month, $skor);
+				$data['parent'] = $this->kpi->get_score_parent($kpi_name, $month);
+					foreach ($data['parent'] as $row) {
+						$this->kpi->insert_score($row->kpi_parent, $kpi_name, $month, ($row->total));
+				}	
 			}
 			redirect('gmf/score');
 		}else{
@@ -283,6 +285,9 @@ class Gmf extends CI_Controller {
 	public function report(){
 		$this->check_session();
 		$data['kpi_name'] = $this->kpi->get_table('tb_kpi_name');
+		$data['report'] = $this->kpi->get_report($this->session->userdata('dashboard'),intval(date('m')));
+		$data['report_all'] = $this->kpi->get_report_ytd($this->session->userdata('dashboard'),intval(date('m')));
+
 		$this->load->view('templates/header');
 		$this->load->view('report/list_report', $data, FALSE);
 		$this->load->view('templates/footer');
@@ -300,6 +305,17 @@ class Gmf extends CI_Controller {
 				$this->session->set_userdata("login",$data['kpi']['login']);
 				$data['user'] = $data['kpi']['login'];
 				$data['status'] = "TRUE";
+				function random_color_part() {
+ 				   return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+				}
+
+				function random_color() {
+    				return random_color_part() . random_color_part() . random_color_part();
+				}
+
+				$data['color'] = array('bg' => random_color(),
+									   'status' => random_color());
+				$this->session->set_userdata('color',$data['color']);
 				echo json_encode($data);
 			}else{
 				$data['status'] = "FALSE";
