@@ -3,7 +3,7 @@ $login = $this->session->userdata('login');
 function get_color($actual, $target){
 	if($actual >= $target){
 		return "#2ecc71";
-	}else if(($actual <= $target) && ($actual  > ($target/2))){
+	}else if(($actual <= $target) && ($actual  > 0)){
 		return "#fdcb6e";
 	}else{
 		return "#d63031";
@@ -154,7 +154,7 @@ function get_color($actual, $target){
 <!-- Modal Manage structure -->
 <div class="modal fade bd-example-modal-lg" id="manageModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-content" style="border-radius: 5px">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>

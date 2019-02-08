@@ -75,7 +75,6 @@
                 </table>
                 <?php }?>
                 <br><br>
-              </div>
             </div>
           </div>
         </div>

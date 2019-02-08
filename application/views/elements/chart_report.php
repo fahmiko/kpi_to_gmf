@@ -19,7 +19,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	legend: {
 		cursor:"pointer",
 		itemclick: function(e){
-          alert( "Legend item clicked with type : ");
+          generate_chart_2nd(e.dataSeries.name);
         }
 	},
 	data: [

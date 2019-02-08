@@ -68,14 +68,14 @@ $initial = strtoupper(substr($login['nama'], 0,2));
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index2.html" class="logo" style="background-color: #006495">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>K</b>PI</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>KPI</span>
+      <span class="logo-lg"><b>KPI </b>Application</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
+    <nav class="navbar navbar-static-top" style="background-image: linear-gradient(to right, #0093D1,#006495, #814374);">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
@@ -84,7 +84,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
   </header>
 
    <!-- Left side column. contains the logo and sebar -->
-  <aside class="main-sidebar">
+  <aside class="main-sidebar" style="background-image: linear-gradient(#222d32,#006495)">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
@@ -162,7 +162,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
 
   <div class="modal fade" id="modal-create-structure">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content" style="border-radius: 5px">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
@@ -202,7 +202,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
   <!-- Modal Help -->
     <div class="modal fade" id="modal-help">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content" style="border-radius: 5px">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>

@@ -81,7 +81,7 @@
 </div>
 <?=form_open('gmf/manage_employee')?>
 <div class="modal fade" id="employee-modal">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="border-radius: 5px">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

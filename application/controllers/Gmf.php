@@ -350,7 +350,7 @@ class Gmf extends CI_Controller {
 	}
 
 	public function logout(){
-		session_destroy();
+		$this->session->unset_userdata('login');
 		redirect('gmf/login','refresh');
 	}
 
