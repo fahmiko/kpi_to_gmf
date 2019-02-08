@@ -47,6 +47,7 @@ class Gmf extends CI_Controller {
 		$data['chart'] = $this->kpi->get_kpi_chart($kpi_name);
 		$data['kpi'] = $this->kpi->get_kpi_join_employee($kpi_name);
 		$data['nilai_kpi'] = $this->kpi->get_ikpi_all($month,$kpi_name);
+		$data['on_progress'] = $this->kpi->get_table_where('tb_kpi_name', 'status', 'on progress');
 
 		$data['kpi1'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->result_array();
 		$data['kpi2'] = $this->db->where('level',3)->where('kpi_name',$kpi_name)->get('tb_kpi')->result_array();
@@ -56,6 +57,13 @@ class Gmf extends CI_Controller {
 
 		$data['row'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->num_rows();
 		$data['row2'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->num_rows();
+
+		$nilai = 0;
+        for($i = 1; $i<=intval(date('m'));$i++){
+          $score = $this->kpi->get_score_kpi_name($i,$this->session->userdata('dashboard'));
+          $nilai += $score['total'];
+        }
+        $data['score'] = $nilai/intval(date('m'));
 
 		$this->load->view('templates/header');
 		$this->load->view('dashboard', $data);

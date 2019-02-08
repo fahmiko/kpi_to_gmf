@@ -42,7 +42,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Target</label>
-                      <input type="number" class="form-control" name="target_lv2_<?=$i?>" placeholder="Target(ex : 60)" required="" min="1" max="100">
+                      <input type="text" class="form-control" name="target_lv2_<?=$i?>" placeholder="Target(ex : 60)" required="" min="1" max="100">
                     </div>  
                   </div>
                   <div class="col-md-6">
@@ -58,7 +58,7 @@
                   <div class="col-md-6">
                       <div class="form-group">
                         <label>Bobot</label>
-                        <input type="number" class="form-control" id="precentage1<?=$i?>" name="weight_lv2_<?=$i?>" placeholder="Bobot(ex : 4.5%)" required="">
+                        <input type="text" class="form-control" id="precentage1<?=$i?>" name="weight_lv2_<?=$i?>" placeholder="Bobot(ex : 4.5%)" required="">
                       </div>
                   </div>
                 </div>
@@ -92,7 +92,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Target</label>
-                      <input type="number" class="form-control" name="target_lv3_<?=$i?>" placeholder="Target(ex : 60)" required="" min="1" max="100">
+                      <input type="text" class="form-control" name="target_lv3_<?=$i?>" placeholder="Target(ex : 60)" required="" min="1" max="100">
                     </div>  
                   </div>
                   <div class="col-md-6">
@@ -108,7 +108,7 @@
                   <div class="col-md-6">
                       <div class="form-group">
                         <label>Bobot</label>
-                        <input type="number" class="form-control" id="precentage2<?=$i?>" name="weight_lv3_<?=$i?>" placeholder="Bobot(ex : 4.5%)" required="">
+                        <input type="text" class="form-control" id="precentage2<?=$i?>" name="weight_lv3_<?=$i?>" placeholder="Bobot(ex : 4.5%)" required="">
                       </div>
                   </div>
                 </div>
@@ -142,7 +142,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Target</label>
-                      <input type="number" class="form-control" name="target_lv4_<?=$i?>" placeholder="Target(ex : 60)" required="" min="1" max="100">
+                      <input type="text" class="form-control" name="target_lv4_<?=$i?>" placeholder="Target(ex : 60)" required="" min="1" max="100">
                     </div>  
                   </div>
                   <div class="col-md-6">
@@ -158,7 +158,7 @@
                   <div class="col-md-6">
                       <div class="form-group">
                         <label>Bobot</label>
-                        <input type="number" class="form-control" id="precentage3<?=$i?>" name="weight_lv4_<?=$i?>" placeholder="Bobot(ex : 4.5%)" required="">
+                        <input type="text" class="form-control" id="precentage3<?=$i?>" name="weight_lv4_<?=$i?>" placeholder="Bobot(ex : 4.5%)" required="">
                       </div>
                   </div>
                 </div>

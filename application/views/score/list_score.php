@@ -1,5 +1,14 @@
 <?php
 $login = $this->session->userdata('login');
+function get_color($actual, $target){
+	if($actual >= $target){
+		return "#2ecc71";
+	}else if(($actual <= $target) && ($actual  > ($target/2))){
+		return "#fdcb6e";
+	}else{
+		return "#d63031";
+	}
+}
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -87,6 +96,12 @@ $login = $this->session->userdata('login');
             if($ikpi == null){
 				echo "<center>NO DATA</center>";
 			}else{?>
+			<div class="btn-group-vertical" style="margin-bottom: 20px">
+				<center><label>Description</label></center>
+				<button type="button" class="btn btn-default" style="background-color: #2ecc71;color: white;">Actual = Target</button>
+				<button type="button" class="btn btn-default" style="background-color: #fdcb6e;color: white;">Actual < Target</button>
+				<button type="button" class="btn btn-default" style="background-color: #d63031;color: white;">Not Defined</button>
+			</div>
 			<table id="dt_table" class="table table-bordered">
 				<thead>
 				<tr>
@@ -106,21 +121,21 @@ $login = $this->session->userdata('login');
 			<?php foreach ($ikpi_all as $data): ?>
 				<tr>
 					<?php 
-					if($skpi_name->status == "on progress"){
-						echo "<td align='center'>";
-						foreach ($ikpi as $row):
+					if($skpi_name->status == "on progress"){?>
+						<td align='center' style="background-color: <?=get_color($data->skor, $data->target)?>;color: white">
+						<?php foreach ($ikpi as $row):
 							 // && ($data->pic == $login['id_pegawai'])
 						if(($data->kpi == $row->kpi)&& ($data->pic == $login['id_pegawai'])){?>
-							<a href="#" onclick="generateModal(<?=$data->kpi_id?>)" data-target="#manageModal" data-toggle="modal"  class="btn btn-primary btn-sm" style="color: white;"><span class="fa fa-pencil-square-o"></span></a><?php 
+							<a href="#" onclick="generateModal(<?=$data->kpi_id?>)" data-target="#manageModal" data-toggle="modal"><span class="fa fa-pencil-square-o" style="color: white"></span></a><?php 
 						}
 					endforeach;
 					echo "</td>";
 					}?>
-					<td><?=$data->kpi?></td>
-					<td><?=($data->weight)*100?></td>
-					<td><?=$data->target?></td>
-					<td><?=$data->skor?></td>
-					<td><?=($data->target*$data->skor)/100?></td>
+					<td style="background-color: <?=get_color($data->skor, $data->target)?>;color: white"><?=$data->kpi?></td>
+					<td style="background-color: <?=get_color($data->skor, $data->target)?>;color: white"><?=($data->weight)*100?></td>
+					<td style="background-color: <?=get_color($data->skor, $data->target)?>;color: white"><?=$data->target?></td>
+					<td style="background-color: <?=get_color($data->skor, $data->target)?>;color: white"><?=$data->skor?></td>
+					<td style="background-color: <?=get_color($data->skor, $data->target)?>;color: white"><?=($data->target*$data->skor)/100?></td>
 				</tr>
 			<?php endforeach; ?>
 				</tbody>

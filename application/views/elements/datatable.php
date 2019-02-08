@@ -16,7 +16,6 @@ $('#dashboard_1').DataTable({
 });
 
 $('#dt_employee').DataTable( {
-	'searching'   : false
 } );
 
 </script>
