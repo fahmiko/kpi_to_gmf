@@ -20,10 +20,10 @@ foreach ($kpi1 as $data) {
 
 for($i=0;$i<$row;$i++){
     $parent = $kpi1[$i]['kpi'];
-    if($this->db->where('kpi_parent',$parent)->get('tb_kpi_structure')->num_rows()!=0){
-        $result = $this->db->where('kpi_parent',$parent)->get('tb_kpi_structure')->result();
+    $result = $this->db->where('kpi_parent',$parent)->where('kpi_name',$this->session->userdata('dashboard'))->get('tb_kpi_structure');
+    if($result->num_rows()!=0){
         $j = 0;
-        foreach ($result as $data) {
+        foreach ($result->result() as $data) {
             $treekpi['kpi']['children'][$i]['children'] += array (
                 $j => array (
                 'description' => $data->kpi,
@@ -41,7 +41,7 @@ for($i = 0;$i < $row_lv2;$i++){
     $num = count($treekpi['kpi']['children'][$i]['children']);
     for($j = 0; $j < $num;$j++){
         $parent = $treekpi['kpi']['children'][$i]['children'][$j]['description'];
-        $result = $this->db->where('kpi_parent',$parent)->get('tb_kpi_structure');
+        $result = $this->db->where('kpi_parent',$parent)->where('kpi_name',$this->session->userdata('dashboard'))->get('tb_kpi_structure');
         if($result->num_rows()!=0){
             $k = 0;
             foreach ($result->result() as $data) {

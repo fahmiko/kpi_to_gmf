@@ -30,13 +30,24 @@ $login = $this->session->userdata('login');
 	  						  <span class="input-group-text" id="">Cari KPI</span>
 	  					</div>
             			<div class="input-group input-group-sm">
-								<select class="form-control" name="kpi" style="width: 200%">
+								<select class="form-control" name="kpi" style="width: 100%">
 									<?php 
 									if($kpi_name == null){
 										echo "<option>NO DATA</option>";
 									}
 									foreach ($kpi_name as $data): ?>
-										<option value="<?=$data->kpi_name?>"><?=$data->kpi_name?></option>
+										<option value="<?=$data->kpi_name?>" 
+											<?php
+												if(@$ps_kpi){
+													if($data->kpi_name == @$ps_kpi){
+														echo "selected";
+													}	
+												}
+												else if($data->kpi_name == $this->session->userdata('dashboard')){
+													echo "selected";
+												}
+											?>
+											><?=$data->kpi_name?></option>
 									<?php endforeach; ?>
 								</select>
 						</div>
@@ -50,7 +61,17 @@ $login = $this->session->userdata('login');
 									<?php 
 										for($i = 1;$i<=12;$i++){
 											$dateObj   = DateTime::createFromFormat('!m', intval($i));?>
-											<option value="<?=$i?>" <?=(intval(date('m')) == $i) ? "selected" : ""?>><?=$dateObj->format('F')?></option>
+											<option value="<?=$i?>" 
+												<?php
+													if(@$ps_month){
+														if(@$ps_month == $i){
+															echo "selected";
+														}
+													}else if ($i == intval(date('m'))) {
+														echo "selected";
+													}
+												?>
+												><?=$dateObj->format('F')?></option>
 										<?php }
 									?>
 							</select>
@@ -88,7 +109,8 @@ $login = $this->session->userdata('login');
 					if($skpi_name->status == "on progress"){
 						echo "<td align='center'>";
 						foreach ($ikpi as $row):
-						if(($data->kpi == $row->kpi) && ($data->pic == $login['id_pegawai'])){?>
+							 // && ($data->pic == $login['id_pegawai'])
+						if(($data->kpi == $row->kpi)&& ($data->pic == $login['id_pegawai'])){?>
 							<a href="#" onclick="generateModal(<?=$data->kpi_id?>)" data-target="#manageModal" data-toggle="modal"  class="btn btn-primary btn-sm" style="color: white;"><span class="fa fa-pencil-square-o"></span></a><?php 
 						}
 					endforeach;

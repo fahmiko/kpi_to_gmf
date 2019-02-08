@@ -45,7 +45,7 @@ class Gmf extends CI_Controller {
 		$data['month'] = $dateObj->format('F');
 
 		$data['chart'] = $this->kpi->get_kpi_chart($kpi_name);
-		$data['kpi'] = $this->kpi->get_kpi($kpi_name);
+		$data['kpi'] = $this->kpi->get_kpi_join_employee($kpi_name);
 		$data['nilai_kpi'] = $this->kpi->get_ikpi_all($month,$kpi_name);
 
 		$data['kpi1'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->result_array();
@@ -64,6 +64,17 @@ class Gmf extends CI_Controller {
 		$this->load->view('elements/datatable', $data);
 		$this->load->view('elements/tree', $data);
 		$this->load->view('elements/modals', $data);
+	}
+
+	public function chart(){
+		$this->check_session();
+		$data['report'] = $this->kpi->get_report($this->session->userdata('dashboard'),intval(date('m')));
+		$data['skor'] = array();
+
+		$this->load->view('templates/header');
+		$this->load->view('chart');
+		$this->load->view('templates/footer');
+		$this->load->view('elements/chart_report',$data);
 	}
 
 	public function delete(){
@@ -116,13 +127,17 @@ class Gmf extends CI_Controller {
 				$data['ikpi_all'] = $this->kpi->get_ikpi_all($data['month'],$this->session->userdata('dashboard'));
 				$data['score_kpi'] = $this->kpi->get_score_kpi_name($data['month'],$this->session->userdata('dashboard'));
 			} else {
+				$data['ps_month'] = $this->input->post('month');
+				$data['ps_kpi'] = $this->input->post('kpi');
 				$data['month'] = $this->input->post('month');
 				$data['skpi_name'] = $this->kpi->get_single("tb_kpi_name", "kpi_name", $this->input->post('kpi'));
 				$data['ikpi'] = $this->kpi->get_ikpi($this->input->post('month'),$this->input->post('kpi'));
 				$data['ikpi_all'] = $this->kpi->get_ikpi_all($this->input->post('month'),$this->input->post('kpi'));
 				$data['score_kpi'] = $this->kpi->get_score_kpi_name($this->input->post('month'),$this->input->post('kpi'));
 			}
+
 			$data['kpi_name'] = $this->kpi->get_table('tb_kpi_name');
+
 			$this->load->view('templates/header');
 			$this->load->view('score/list_score',$data);
 			$this->load->view('templates/footer');
@@ -329,5 +344,15 @@ class Gmf extends CI_Controller {
 	public function logout(){
 		session_destroy();
 		redirect('gmf/login','refresh');
+	}
+
+	public function json_chart(){
+		$name = $this->session->userdata('dashboard');
+		$kpi = $this->input->post('id');
+		$data = $this->db->query("SELECT tk.target as y, ts.kpi as label FROM tb_kpi_structure ts 
+			JOIN tb_kpi tk ON tk.kpi  = ts.kpi_parent
+			WHERE tk.kpi_name = '$name'
+			AND ts.kpi_parent = '$kpi'")->result_array();
+		echo json_encode($data);
 	}
 }

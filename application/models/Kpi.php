@@ -17,19 +17,30 @@ class Kpi extends CI_Model {
 	}
 
 	function get_kpi_chart($kpi_name){
-		return $this->db->query("SELECT weight AS y,kpi AS label FROM tb_kpi WHERE kpi_name='$kpi_name' AND level = 2")->result_array();
+		return $this->db->query("SELECT (weight*100) AS y,kpi AS label FROM tb_kpi WHERE kpi_name='$kpi_name' AND level = 2")->result_array();
 	}
 
 	function get_kpi($object){
 		return $this->db->where('kpi_name',$object)->get('tb_kpi')->result();
 	}
 
+	function get_kpi_join_employee($kpi_name){
+		return $this->db->query("SELECT * FROM tb_kpi tk 
+								JOIN tb_pegawai tp 
+								ON tk.pic = tp.id_pegawai
+								WHERE tk.kpi_name = '$kpi_name'")->result();
+	}
+
 	function get_target_kpi($kpi_name,$kpi){
 		return $this->db->where('kpi_name',$kpi_name)->where('kpi',$kpi)->get('tb_kpi')->row();
 	}
 
-	function get_join_kpi_score(){
-
+	function get_score_chart($kpi_name,$kpi,$month){
+		return $this->db->query("SELECT * FROM tb_kpi_score 
+								WHERE kpi = '$kpi'
+								AND kpi_name = '$kpi_name'
+								AND month   = $month
+								")->row();
 	}
 
 	function get_login($username, $password){

@@ -1,6 +1,7 @@
 <script>
 window.onload = function () {
 
+console.log(<?=json_encode($chart)?>);
 var options = {
     theme: "light2",
     title: {
@@ -21,4 +22,3 @@ var options = {
 $("#chartContainer").CanvasJSChart(options);
 }
 </script>
-<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>

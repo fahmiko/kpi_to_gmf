@@ -217,6 +217,7 @@
 <!-- DataTables -->
 <script src="<?=base_url()?>lte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="<?=base_url()?>lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="<?=base_url()?>resources/assets/js/jquery.canvasjs.min.js"></script>
 <script>
 $('#dt_table').DataTable( {
 

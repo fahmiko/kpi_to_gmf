@@ -51,14 +51,14 @@ $initial = strtoupper(substr($login['nama'], 0,2));
   <style type="text/css">
     .circle-text {
         display: inherit;
-        height: 55px; /*change this and the width
+        height: 40px; /*change this and the width
         for the size of your initial circle*/
-        width: 55px;
+        width: 40px;
         border-radius: 50%;
         /*make it pretty*/
         background: #<?=$color['bg']?>;
 
-        font-size: 35px;
+        font-size: 25px;
         color: #fff;
         }
   </style>
@@ -90,7 +90,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <div class="circle-text" style="text-align: center;vertical-align: middle;"><?=$initial?></div>
+          <div class="circle-text" style="text-align: center;vertical-align: middle;margin-left: -4px"><?=$initial?></div>
         </div>
         <div class="pull-left info">
           <p><?=$login['nama']?></p>
@@ -140,6 +140,13 @@ $initial = strtoupper(substr($login['nama'], 0,2));
           <a href="<?=site_url()?>gmf/report">
             <i class="fa fa-line-chart"></i>
             <span>Report</span>
+          </a>
+      </ul>
+      <ul class="sidebar-menu">
+        <li class="treeview <?php echo ($this->uri->segment(2) == "chart") ? "active" : "" ?>">
+          <a href="<?=site_url()?>gmf/chart">
+            <i class="fa fa-pie-chart"></i>
+            <span>Chart</span>
           </a>
       </ul>
       <ul class="sidebar-menu">

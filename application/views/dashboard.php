@@ -136,7 +136,7 @@
                   <?php foreach ($kpi as $data):?>
                     <tr>
                       <td><?=$data->kpi?></td>
-                      <td><?=$data->pic?></td>
+                      <td><?=$data->nama?></td>
                       <td><?=$data->target?></td>
                     </tr>
                   <?php endforeach ?>

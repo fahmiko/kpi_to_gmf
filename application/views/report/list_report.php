@@ -32,14 +32,14 @@
             <!-- /.box-header -->
             <?=form_open('gmf/score')?>
             <div class="box-body" style="margin:10px">
-            	
-              <br>
               <!-- Table Report -->
               <?php if($report == null){
-                  echo "NO DATA, SELECT KPI";
+                  echo "<center>NO DATA, SELECT KPI</center>";
                 }else{
                 ?>
-                  <table class="table table-bordered">
+                <a href="#" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                  <br><br>
+                  <table class="table table-bordered table-stripped table-responsive">
                     <tr>
                       <th rowspan="2" style="vertical-align: middle;">NO</th>
                       <th rowspan="2" style="vertical-align: middle;">KPI</th>
