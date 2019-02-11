@@ -76,7 +76,7 @@
                   <td><?=$data->target?>%</td>
                   <td><?=$data->skor?>%</td>
                   <td><?=$data->target?>%</td>
-                  <td><?=number_format($report_all[$row]->avg,1)?></td>
+                  <td><?=number_format($report_all[$row]->avg,1)?>%</td>
                             </tr>
                             <?php
                             $no++;

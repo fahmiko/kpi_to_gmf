@@ -28,8 +28,10 @@ class Gmf extends CI_Controller {
 
 	public function index()
 	{
+		// Check Session
 		$this->check_session();
 		$kpi_name = null;
+		// Get Selected KPI
 		if($this->session->userdata('dashboard')!=null){
 			$kpi_name = $this->session->userdata('dashboard');
 		}
@@ -39,32 +41,32 @@ class Gmf extends CI_Controller {
 			$kpi_name = urldecode(@$_GET['select-kpi']);
 			redirect('gmf','refresh');
 		}
-
+		// Generate Month to String
 		$month = intval(date('m'));
 		$dateObj   = DateTime::createFromFormat('!m', $month);
 		$data['month'] = $dateObj->format('F');
-
+		// Get Data using model
 		$data['chart'] = $this->kpi->get_kpi_chart($kpi_name);
 		$data['kpi'] = $this->kpi->get_kpi_join_employee($kpi_name);
 		$data['nilai_kpi'] = $this->kpi->get_ikpi_all($month,$kpi_name);
 		$data['on_progress'] = $this->kpi->get_table_where('tb_kpi_name', 'status', 'on progress');
-
+		// Get data kpi Parent
 		$data['kpi1'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->result_array();
 		$data['kpi2'] = $this->db->where('level',3)->where('kpi_name',$kpi_name)->get('tb_kpi')->result_array();
-
+		// Get table
 		$data['tb_kpi_name'] = $this->kpi->get_table('tb_kpi_name');
 		$data['tb_employee'] = $this->kpi->get_table('tb_pegawai');
-
+		// Get Row for tree
 		$data['row'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->num_rows();
 		$data['row2'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->num_rows();
-
+		// Loop to get score kpi latest
 		$nilai = 0;
         for($i = 1; $i<=intval(date('m'));$i++){
           $score = $this->kpi->get_score_kpi_name($i,$this->session->userdata('dashboard'));
           $nilai += $score['total'];
         }
         $data['score'] = $nilai/intval(date('m'));
-
+        // Generate view to display
 		$this->load->view('templates/header');
 		$this->load->view('dashboard', $data);
 		$this->load->view('templates/footer');
@@ -76,9 +78,10 @@ class Gmf extends CI_Controller {
 
 	public function chart(){
 		$this->check_session();
+		// Get data report using model
 		$data['report'] = $this->kpi->get_report($this->session->userdata('dashboard'),intval(date('m')));
 		$data['skor'] = array();
-
+		// Generate view to display
 		$this->load->view('templates/header');
 		$this->load->view('chart');
 		$this->load->view('templates/footer');
@@ -86,8 +89,9 @@ class Gmf extends CI_Controller {
 	}
 
 	public function delete(){
+		// Get values using url segment
 		$kpi = urldecode($this->uri->segment(3));
-
+		// Delete data record in database using model
 		$this->kpi->delete('tb_kpi_structure','kpi_name',$kpi);
 		$this->kpi->delete('tb_kpi','kpi_name',$kpi);
 		$this->kpi->delete('tb_kpi_name','kpi_name',$kpi);
@@ -96,7 +100,9 @@ class Gmf extends CI_Controller {
 	}
 
 	public function update_kpi(){
+		// Get values using url segment
 		$kpi = urldecode($this->uri->segment(3));
+		// Update row using model
 		$this->kpi->set_data(array('column'=>'kpi_name','table'=>'tb_kpi_name'), array('status'=>'finish'), $kpi);
 		redirect('gmf/list');
 	}
@@ -111,12 +117,15 @@ class Gmf extends CI_Controller {
 	}
 
 	public function score(){
+		// Check session
 		$this->check_session();
+		// if form not selected or null
 		if($this->input->post('kpi_name')!=null){
 			$kpi = $this->input->post('kpi');
 			$kpi_name = $this->input->post('kpi_name');
 			$month = $this->input->post('month');
 			$skor = $this->input->post('nilai');
+			// loop for insert row database using model
 			for($i = 0;$i<2;$i++){
 				$this->kpi->insert_score($kpi, $kpi_name, $month, $skor);
 				$data['parent'] = $this->kpi->get_score_parent($kpi_name, $month);
@@ -126,15 +135,19 @@ class Gmf extends CI_Controller {
 			}
 			redirect('gmf/score');
 		}else{
+			// form validation code igniter set kpi and month is required
 			$this->form_validation->set_rules('kpi', 'KPI', 'required');
 			$this->form_validation->set_rules('month', 'Month', 'required');
+
 			if ($this->form_validation->run() == FALSE) {
+				// if validation run false generate query get but not using parameter kpi name
 				$data['month'] = intval(date('m'));
 				$data['skpi_name'] = $this->kpi->get_single("tb_kpi_name", "kpi_name", $this->session->userdata('dashboard'));
 				$data['ikpi'] = $this->kpi->get_ikpi($data['month'],$this->session->userdata('dashboard'));
 				$data['ikpi_all'] = $this->kpi->get_ikpi_all($data['month'],$this->session->userdata('dashboard'));
 				$data['score_kpi'] = $this->kpi->get_score_kpi_name($data['month'],$this->session->userdata('dashboard'));
 			} else {
+				// if validation run false generate query get but using parameter kpi name
 				$data['ps_month'] = $this->input->post('month');
 				$data['ps_kpi'] = $this->input->post('kpi');
 				$data['month'] = $this->input->post('month');
@@ -143,9 +156,9 @@ class Gmf extends CI_Controller {
 				$data['ikpi_all'] = $this->kpi->get_ikpi_all($this->input->post('month'),$this->input->post('kpi'));
 				$data['score_kpi'] = $this->kpi->get_score_kpi_name($this->input->post('month'),$this->input->post('kpi'));
 			}
-
+			// Get row table kpi name
 			$data['kpi_name'] = $this->kpi->get_table('tb_kpi_name');
-
+			// Generate view
 			$this->load->view('templates/header');
 			$this->load->view('score/list_score',$data);
 			$this->load->view('templates/footer');
@@ -312,6 +325,13 @@ class Gmf extends CI_Controller {
 		$this->load->view('templates/footer');
 	}
 
+	
+	public function check_session(){
+		if($this->session->userdata('login')==null){
+			redirect('gmf/login','refresh');
+		}
+	}
+
 	public function login(){
 		$this->form_validation->set_rules('username', 'Username', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
@@ -343,12 +363,6 @@ class Gmf extends CI_Controller {
 		}
 	}
 
-	public function check_session(){
-		if($this->session->userdata('login')==null){
-			redirect('gmf/login','refresh');
-		}
-	}
-
 	public function logout(){
 		$this->session->unset_userdata('login');
 		$this->session->unset_userdata('color');
@@ -369,5 +383,11 @@ class Gmf extends CI_Controller {
 		$data['report'] = $this->kpi->get_report($this->session->userdata('dashboard'),intval(date('m')));
 		$data['report_all'] = $this->kpi->get_report_ytd($this->session->userdata('dashboard'),intval(date('m')));
 		$this->load->view('report/print',$data);
+	}
+
+	function json_kpi($id){
+		$this->db->where('kpi_id',$id);
+		$data = $this->db->get('tb_kpi');
+		echo json_encode($data->row_array());
 	}
 }

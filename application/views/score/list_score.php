@@ -201,7 +201,7 @@ function get_color($actual, $target){
 <script type="text/javascript">
 	function generateModal(id){
     $.ajax({
-        url: "<?php echo site_url('dashboard/json_kpi/') ?>"+id,
+        url: "<?php echo site_url('gmf/json_kpi/') ?>"+id,
         dataType: "JSON",
         success: function(data){
         	document.getElementById('kpi_name').value = data.kpi_name;
