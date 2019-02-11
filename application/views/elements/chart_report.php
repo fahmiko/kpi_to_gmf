@@ -64,6 +64,7 @@ function onClick(e) {
 // Chart Donut Level 2
 function generate_chart_2nd(id){
 $('#modal-kpi-chart').modal().show();
+$('#donutChart2').hide();
 
 var dataChart = [];
 $.ajax({
@@ -86,10 +87,10 @@ $.ajax({
 			data: [{
 				type: "doughnut",
 				startAngle: 60,
-				//innerRadius: 60,
+				// innerRadius: 60,
 				click: onClick2,
 				explodeOnClick: false,
-				indexLabelFontSize: 17,
+				indexLabelFontSize: 15,
 				indexLabel: "{label} - #percent%",
 				toolTipContent: "<b>{label}:</b> {y} (#percent%)",
 				dataPoints: dataChart
@@ -105,6 +106,7 @@ $.ajax({
 }
 
 function generate_chart_3rd(id){
+$('#donutChart2').show();
 // $('#modal-kpi-chart').modal().hide();
 // $('#modal-kpi-chart').modal().show();
 
@@ -128,12 +130,10 @@ $.ajax({
 			},
 			data: [{
 				type: "doughnut",
-				startAngle: 60,
-				//innerRadius: 60,
 				explodeOnClick: false,
-				indexLabelFontSize: 17,
-				indexLabel: "{label} - #percent%",
-				toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+				indexLabelPlacement: "outside",        
+        		radius: "90%", 
+        		innerRadius: "75%",
 				dataPoints: dataChart
 			}]
 		});

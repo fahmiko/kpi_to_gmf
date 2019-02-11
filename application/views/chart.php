@@ -3,12 +3,12 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Report
-      <small>List Report</small>
+      Chart
+      <small>List Chart</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Report</li>
+      <li class="active">chart</li>
     </ol>
   </section>
   <section class="content">
@@ -16,7 +16,7 @@
   		<div class="col-md-12">
   			<div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Report</h3>
+              <h3 class="box-title">Data Chart</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="margin:10px">

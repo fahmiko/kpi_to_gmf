@@ -37,7 +37,7 @@
                   echo "<center>NO DATA, SELECT KPI</center>";
                 }else{
                 ?>
-                <a href="#" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                <a href="<?=site_url()?>gmf/print_report" class="btn btn-default" target="_blank"><i class="fa fa-print"></i> Print</a>
                   <br><br>
                   <table class="table table-bordered table-stripped table-responsive">
                     <tr>
@@ -70,8 +70,6 @@
                           }
                         }
                       ?>
-
-  
                 </table>
                 <?php }?>
                 <br><br>

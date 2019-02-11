@@ -68,7 +68,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo" style="background-color: #006495">
+    <a href="<?=site_url()?>gmf" class="logo" style="background-color: #006495">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>K</b>PI</span>
       <!-- logo for regular state and mobile devices -->

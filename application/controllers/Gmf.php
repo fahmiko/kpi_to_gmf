@@ -351,6 +351,7 @@ class Gmf extends CI_Controller {
 
 	public function logout(){
 		$this->session->unset_userdata('login');
+		$this->session->unset_userdata('color');
 		redirect('gmf/login','refresh');
 	}
 
@@ -362,5 +363,11 @@ class Gmf extends CI_Controller {
 			WHERE tk.kpi_name = '$name'
 			AND ts.kpi_parent = '$kpi'")->result_array();
 		echo json_encode($data);
+	}
+
+	public function print_report(){
+		$data['report'] = $this->kpi->get_report($this->session->userdata('dashboard'),intval(date('m')));
+		$data['report_all'] = $this->kpi->get_report_ytd($this->session->userdata('dashboard'),intval(date('m')));
+		$this->load->view('report/print',$data);
 	}
 }
