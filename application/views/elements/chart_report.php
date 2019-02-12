@@ -34,7 +34,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dataPoints:[
 		<?php for($j = 0;$j < (intval(date('m')));$j++){?>
 			{ label: "<?=DateTime::createFromFormat('!m', ($j+1))->format('F');?>",
-			  y: <?=$this->kpi->get_score_chart($this->session->userdata('dashboard'),$row->kpi,($j+1))->skor?>
+			  y: <?=$this->kpi->get_score_chart($this->session->userdata('dashboard'),$row->kpi,($j+1))->arcv?>
 			},
 		<?php 
 			} 

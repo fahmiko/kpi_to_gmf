@@ -1,8 +1,5 @@
 
 <!-- DataTables -->
-<script src="<?=base_url()?>lte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?=base_url()?>lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
 <script type="text/javascript">
 $('#dashboard_1').DataTable({
       'paging'      : true,
@@ -18,4 +15,176 @@ $('#dashboard_1').DataTable({
 $('#dt_employee').DataTable( {
 } );
 
+
+/* Formatting function for row details - modify as you need */
+
+function format (d) {
+    // `d` is the original data object for the row
+    var table = "<table class='table' id='dt_detail_"+d+"'>"+
+    	"<tr><thead>"+
+    		"<th></th>"+
+    		"<th style=''><cebter>KPI</center></th>"+
+    		"<th>Bobot</th>"+
+    		"<th>Target</th>"+
+    		"<th>Actual</th>"+
+    		"<th>Archievment</th>"+
+    	"</tr></thead>";
+    // for(i = 0;i < d.length; i++){
+    // 	table += "<tr>"+
+    // 		"<td><i class='fa fa-plus'></i></td>"+
+    // 		'<td>'+d[i]['kpi']+'</td>'+
+    // 		'<td>'+d[i]['weight']+'</td>'+
+    // 		'<td>'+d[i]['target']+'</td>'+
+    // 	"</tr>";
+    // }
+    table += "</table>";
+    return table;
+}
+
+function format2(d){
+	var table = "<table id='dashboard_1' class='table' cellspacing='0' border='0'>"+
+	"<tr>"+
+    		"<th style='width: 316px'></th>"+
+    		"<th></th>"+
+    		"<th></th>"+
+    		"<th></th>"+
+    		"<th></th>"+
+    	"</tr>";
+    for(i = 0;i < d.length; i++){
+    	table += "<tr>"+
+    		'<td>'+d[i]['kpi']+'</td>'+
+    		'<td>'+d[i]['weight']+'</td>'+
+    		'<td>'+d[i]['target']+'</td>'+
+    		'<td>'+d[i]['actual']+'</td>'+
+    		'<td>'+d[i]['arcv']+'</td>'+
+    	"</tr>";
+    }
+    table += "</table>";
+    return table;
+}
+
+var tableCounter = 0;
+
+$(document).ready(function() {
+    var table = $('#dt_score').DataTable( {
+        "ajax": "<?=site_url()?>gmf/json_score",
+        "columns": [
+            {
+                "className":      'details-control',
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ''
+            },
+            { "data": "kpi" },
+            { "data": "weight" },
+            { "data": "target" },
+            { "data": "actual" },
+            { "data": "arcv"}
+        ],
+        "order": [[1, 'asc']],
+    } );
+     
+    // Add event listener for opening and closing details
+    $('#dt_score tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            var dtTable = [];
+            $.ajax({
+    			url: "<?php echo site_url('gmf/json_score_tree')?>",
+    			dataType: "JSON",
+    			type: "POST",
+    			data:{
+        			id: row.data().kpi,
+    			},success: function(json){
+    				$.each(json, function(key, value){
+        				dtTable.push({weight: value['weight'],target: parseInt(value['target']),kpi: value['kpi'],actual: value['actual'],arcv: value['arcv']});
+    				});
+    				row.child(format(tableCounter)).show();
+            		tr.addClass('shown');
+
+            		childTable = $('#dt_detail_' + tableCounter).DataTable( {
+            			data : dtTable,
+            			'paging'      : false,
+      					'lengthChange': false,
+      					'searching'   : false,
+      					'ordering'    : false,
+      					'info'        : false,
+      					'autoWidth'   : false,
+    				    "columns" : [
+    				    {
+                				"className":      'details-control1',
+                				"orderable":      false,
+                				"data":           null,
+                				"defaultContent": ''
+            				},
+    				    	{ data:'kpi' },
+                   			{ data:'weight' }, 
+                   			{ data:'target' },
+                   			{ data: "actual" },
+            				{ data: "arcv"}
+    				    ]
+    				} );
+
+    				$('#dt_detail_' + tableCounter + ' tbody').on('click', 'td.details-control1', function () {
+        				var tr = $(this).closest('tr');
+        				var row = childTable.row( tr );
+
+        				if (row.child.isShown() ) {
+        				    // This row is already open - close it
+        				    row.child.hide();
+        				    tr.removeClass('shown');
+        				}else{
+        					var dtTable2 = [];
+            					$.ajax({
+    								url: "<?php echo site_url('gmf/json_score_tree')?>",
+    								dataType: "JSON",
+    								type: "POST",
+    								data:{
+        								id: row.data().kpi,
+    								},success: function(json){
+    									$.each(json, function(key, value){
+        									dtTable2.push({weight: value['weight'],target: parseInt(value['target']),kpi: value['kpi'],actual: value['actual'],arcv: value['arcv']});
+    									});
+    									row.child(format2(dtTable2)).show();
+            							tr.addClass('shown');
+    								}
+    							});
+        				}
+        			});
+    				tableCounter++;
+    			}
+    		});
+        }
+    } );
+} );
+
+$(document).ready(function(){
+	$("#kpi").change(function() {
+		var id = $('#kpi').val();
+  		$.ajax({
+    		url: "<?php echo site_url('gmf/json_kpi/') ?>"+id,
+        	dataType: "JSON",
+        	success: function(data){
+        		$('#weight').val(data.weight);
+        		$('#target').val(data.target);
+    		}
+    	});
+	});
+
+	$("#actual").on('input', function(){
+		var actual = $('#actual').val();
+		var weight = $('#weight').val();
+		var target = $('#target').val();
+		var arcv = (actual/target)*(weight*100);
+		$('#arcv').val(arcv);
+	});
+});
 </script>

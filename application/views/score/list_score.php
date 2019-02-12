@@ -10,6 +10,32 @@ function get_color($actual, $target){
 	}
 }
 ?>
+<style type="text/css">
+td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_open.png')       no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
+
+td.details-control1 {
+    background: url('http://www.datatables.net/examples/resources/details_open.png')       no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control1 {
+    background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
+
+.well {
+    background: none;
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+    background-color: #CFF5FF;
+}
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -97,28 +123,29 @@ function get_color($actual, $target){
 				echo "<center>NO DATA</center>";
 			}else{?>
 			<div class="btn-group-vertical" style="margin-bottom: 20px">
-				<center><label>Description</label></center>
-				<button type="button" class="btn btn-default" style="background-color: #2ecc71;color: white;">Actual = Target</button>
-				<button type="button" class="btn btn-default" style="background-color: #fdcb6e;color: white;">Actual < Target</button>
-				<button type="button" class="btn btn-default" style="background-color: #d63031;color: white;">Not Defined</button>
+				<button type="button" onclick="generateModal()" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Input Score</button>
 			</div>
-			<table id="dt_table" class="table table-bordered">
+			<table id="dt_score" class="table table-striped">
 				<thead>
 				<tr>
 					<?php
-					if($skpi_name->status == "on progress"){
-						echo '<th align="center" style="text-align: center;width:30px">Action</th>';
-					}
+					// if($skpi_name->status == "on progress"){
+					// 	echo '<th align="center" style="text-align: center;width:30px">Action</th>';
+					// }
 					?>
+					<th align="center" style="text-align: center;"></th>
 					<th align="center" style="text-align: center;">KPI</th>
 					<th align="center" style="text-align: center;">Bobot</th>
 					<th align="center" style="text-align: center;">Target</th>
 					<th align="center" style="text-align: center;">Actual</th>
-					<th align="center" style="text-align: center;">Skor</th>
+					<th align="center" style="text-align: center;">Archievment</th>
 				</tr>
 				</thead>
-				<tbody>
-			<?php foreach ($ikpi_all as $data): ?>
+
+			<?php
+			/* Function using php
+			<tbody>
+			 foreach ($ikpi_all as $data): ?>
 				<tr>
 					<?php 
 					if($skpi_name->status == "on progress"){?>
@@ -139,6 +166,7 @@ function get_color($actual, $target){
 				</tr>
 			<?php endforeach; ?>
 				</tbody>
+				*/?>
 			</table>
 			<hr>
 				<label style="margin-left: 20px">SKOR KPI <?php echo $score_kpi['total']?></label>
@@ -165,23 +193,37 @@ function get_color($actual, $target){
 			<input type="hidden" name="month" value="<?=@$month?>">
 			<div class="form-group">
 				<label>KPI Name</label>
-				<input type="text" class="form-control" name="kpi_name" id="kpi_name"  readonly="">
+				<input class="form-control" type="text" name="kpi_name" value="<?=$this->session->userdata('dashboard')?>" readonly>
 			</div>
 			<div class="form-group">
 				<label>KPI</label>
-				<input type="text" class="form-control" name="kpi" id="kpi" readonly="">
+				<select name="kpi" id="kpi" class="form-control">
+					<option hidden="">Select One</option>
+					<?php
+						foreach ($ikpi as $data) {
+							if($data->pic == $login['id_pegawai']){
+								echo "<option value='$data->kpi_id'>$data->kpi</option>";
+							}
+							?>
+						<?php }
+					?>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Weight</label>
+				<input type="text" class="form-control" name="weight" id="weight" readonly="">
 			</div>
 			<div class="form-group">
 				<label>Target</label>
-				<input type="text" class="form-control" name="weight" id="bobot" readonly="">
+				<input type="text" class="form-control" name="target" id="target" readonly="">
 			</div>
 			<div class="form-group">
 				<label>Actual</label>
-				<input type="text" class="form-control" name="nilai" id="nilai" placeholder="Nilai Actual" oninput="generateScore()" required="">
+				<input type="text" class="form-control" name="actual" id="actual" placeholder="Nilai Actual" oninput="generateScore()" required="">
 			</div>
 			<div class="form-group">
-				<label>Skor</label>
-				<input type="text" class="form-control" name="skor" id="skor" readonly="">
+				<label>Archievment</label>
+				<input type="text" class="form-control" name="arcv" id="arcv" readonly="">
 				<input type="hidden" id="target">
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
@@ -195,29 +237,11 @@ function get_color($actual, $target){
 
 </body>
 </html>
-<script src="<?=base_url()?>resources/vendors/jquery/dist/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- <script src="<?=base_url()?>resources/vendors/jquery/dist/jquery.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
 <script type="text/javascript">
-	function generateModal(id){
-    $.ajax({
-        url: "<?php echo site_url('gmf/json_kpi/') ?>"+id,
-        dataType: "JSON",
-        success: function(data){
-        	document.getElementById('kpi_name').value = data.kpi_name;
-        	document.getElementById('kpi').value = data.kpi;
-        	document.getElementById('bobot').value = data.target;
-        	document.getElementById('target').value = (data.target/100);
-        	}
-    	});
-	}
-
-	function generateScore(){
-		var bobot = $('#target').val();
-		var nilai = $('#nilai').val();
-		var skor;
-		skor = nilai*bobot;
-		document.getElementById('skor').value = skor;
-
-	}
+	function generateModal(){
+    	$('#manageModal').modal().show();
+	}	
 </script>

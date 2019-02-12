@@ -204,6 +204,13 @@
                     <input type="hidden" name="created" value="<?=$login['id_pegawai']?>">
                     <input type="text" class="form-control" placeholder="Nama KPI(ex : Assets Manajemen)" value="<?=$login['nama']?>" readonly>
                   </div>
+                  <div class="form-group">
+                    <label>Formula</label>
+                    <select name="formula" class="form-control">
+                      <option value="arcv">YTD = Archievment</option>
+                      <option value="avg">TYD = Archievment/Month</option>
+                    </select>
+                  </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="tb_lv_2"><br>
                     <div class="row" style="margin-left: 30px">

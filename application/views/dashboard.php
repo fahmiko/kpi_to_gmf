@@ -150,21 +150,6 @@
 
         <!-- /.col -->
       </div>
-                <!-- /.box -->
-      <div class="box">
-        <div class="box-header">
-          <h3 class="box-title">Structure KPI</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <?php if($kpi == null) {
-            echo "<center>NO DATA</center>";
-          }else{ ?>
-            <div id="my-container" style="margin-top: 2px;"></div>
-          <?php } ?>
-        </div>
-        <!-- /.box-body -->
-      </div>
       <!-- /.box -->
       <div class="box">
             <div class="box-header">
