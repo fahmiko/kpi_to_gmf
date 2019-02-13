@@ -23,9 +23,7 @@ function format (d) {
     var table = "<table class='table' id='dt_detail_"+d+"'>"+
     	"<tr><thead>"+
     		"<th></th>"+
-    		"<th style=''><cebter>KPI</center></th>"+
-    		"<th>Bobot</th>"+
-    		"<th>Target</th>"+
+    		"<th>KPI</th>"+
     		"<th>Actual</th>"+
     		"<th>Archievment</th>"+
     	"</tr></thead>";
@@ -42,24 +40,25 @@ function format (d) {
 }
 
 function format2(d){
-	var table = "<table id='dashboard_1' class='table' cellspacing='0' border='0'>"+
+	var table;
+	if(d.length == 0){
+		table = "";
+	}else{
+	table = "<table class='table' cellspacing='0' border='0'>"+
 	"<tr>"+
-    		"<th style='width: 316px'></th>"+
-    		"<th></th>"+
-    		"<th></th>"+
-    		"<th></th>"+
-    		"<th></th>"+
+    		"<th><center>KPI</center></th>"+
+    		"<th>Actual</th>"+
+    		"<th>Archievment</th>"+
     	"</tr>";
     for(i = 0;i < d.length; i++){
     	table += "<tr>"+
     		'<td>'+d[i]['kpi']+'</td>'+
-    		'<td>'+d[i]['weight']+'</td>'+
-    		'<td>'+d[i]['target']+'</td>'+
     		'<td>'+d[i]['actual']+'</td>'+
     		'<td>'+d[i]['arcv']+'</td>'+
     	"</tr>";
     }
     table += "</table>";
+	}
     return table;
 }
 
@@ -105,7 +104,7 @@ $(document).ready(function() {
         			id: row.data().kpi,
     			},success: function(json){
     				$.each(json, function(key, value){
-        				dtTable.push({weight: value['weight'],target: parseInt(value['target']),kpi: value['kpi'],actual: value['actual'],arcv: value['arcv']});
+        				dtTable.push({weight: value['weight'],target: value['target'],kpi: value['kpi'],actual: value['actual'],arcv: value['arcv']});
     				});
     				row.child(format(tableCounter)).show();
             		tr.addClass('shown');
@@ -126,8 +125,6 @@ $(document).ready(function() {
                 				"defaultContent": ''
             				},
     				    	{ data:'kpi' },
-                   			{ data:'weight' }, 
-                   			{ data:'target' },
                    			{ data: "actual" },
             				{ data: "arcv"}
     				    ]
@@ -151,7 +148,7 @@ $(document).ready(function() {
         								id: row.data().kpi,
     								},success: function(json){
     									$.each(json, function(key, value){
-        									dtTable2.push({weight: value['weight'],target: parseInt(value['target']),kpi: value['kpi'],actual: value['actual'],arcv: value['arcv']});
+        									dtTable2.push({weight: value['weight'],target: value['target'],kpi: value['kpi'],actual: value['actual'],arcv: value['arcv']});
     									});
     									row.child(format2(dtTable2)).show();
             							tr.addClass('shown');
@@ -165,26 +162,4 @@ $(document).ready(function() {
         }
     } );
 } );
-
-$(document).ready(function(){
-	$("#kpi").change(function() {
-		var id = $('#kpi').val();
-  		$.ajax({
-    		url: "<?php echo site_url('gmf/json_kpi/') ?>"+id,
-        	dataType: "JSON",
-        	success: function(data){
-        		$('#weight').val(data.weight);
-        		$('#target').val(data.target);
-    		}
-    	});
-	});
-
-	$("#actual").on('input', function(){
-		var actual = $('#actual').val();
-		var weight = $('#weight').val();
-		var target = $('#target').val();
-		var arcv = (actual/target)*(weight*100);
-		$('#arcv').val(arcv);
-	});
-});
 </script>

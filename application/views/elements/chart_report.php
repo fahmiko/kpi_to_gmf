@@ -32,7 +32,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		legendText: "<?=$row->kpi?>",
 		showInLegend: true, 
 		dataPoints:[
-		<?php for($j = 0;$j < (intval(date('m')));$j++){?>
+		<?php for($j = 0;$j < $this->session->userdata('month');$j++){?>
 			{ label: "<?=DateTime::createFromFormat('!m', ($j+1))->format('F');?>",
 			  y: <?=$this->kpi->get_score_chart($this->session->userdata('dashboard'),$row->kpi,($j+1))->arcv?>
 			},

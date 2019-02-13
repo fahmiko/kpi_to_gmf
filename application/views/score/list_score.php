@@ -96,13 +96,9 @@ tr.shown td.details-control1 {
 									<?php 
 										for($i = 1;$i<=12;$i++){
 											$dateObj   = DateTime::createFromFormat('!m', intval($i));?>
-											<option value="<?=$i?>" 
+											<option value="<?=$i?>"
 												<?php
-													if(@$ps_month){
-														if(@$ps_month == $i){
-															echo "selected";
-														}
-													}else if ($i == intval(date('m'))) {
+													if($this->session->userdata('month') == $i){
 														echo "selected";
 													}
 												?>
@@ -169,7 +165,6 @@ tr.shown td.details-control1 {
 				*/?>
 			</table>
 			<hr>
-				<label style="margin-left: 20px">SKOR KPI <?php echo $score_kpi['total']?></label>
 			<?php } ?>
 		</div>
         </div>
@@ -201,9 +196,9 @@ tr.shown td.details-control1 {
 					<option hidden="">Select One</option>
 					<?php
 						foreach ($ikpi as $data) {
-							if($data->pic == $login['id_pegawai']){
+							// if($data->pic == $login['id_pegawai']){
 								echo "<option value='$data->kpi_id'>$data->kpi</option>";
-							}
+							// }
 							?>
 						<?php }
 					?>
@@ -219,11 +214,13 @@ tr.shown td.details-control1 {
 			</div>
 			<div class="form-group">
 				<label>Actual</label>
-				<input type="text" class="form-control" name="actual" id="actual" placeholder="Nilai Actual" oninput="generateScore()" required="">
+				<input type="text" class="form-control" name="actual" id="actual" placeholder="Nilai Actual" required="">
 			</div>
+			<input type="hidden" id="formula" value="<?=$this->session->userdata('formula')?>">
 			<div class="form-group">
 				<label>Archievment</label>
 				<input type="text" class="form-control" name="arcv" id="arcv" readonly="">
+				<input type="hidden" name="pre_act" id="pre_act">
 				<input type="hidden" id="target">
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
@@ -237,11 +234,55 @@ tr.shown td.details-control1 {
 
 </body>
 </html>
-<!-- <script src="<?=base_url()?>resources/vendors/jquery/dist/jquery.min.js"></script> -->
+<!-- jQuery 3 -->
+<script src="<?=base_url()?>lte/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
 <script type="text/javascript">
-	function generateModal(){
-    	$('#manageModal').modal().show();
-	}	
+function generateModal(){
+    $('#manageModal').modal().show();
+}	
+
+$(document).ready(function(){
+	$("#kpi").change(function() {
+		var id = $('#kpi').val();
+  		$.ajax({
+    		url: "<?php echo site_url('gmf/json_kpi/') ?>"+id,
+        	dataType: "JSON",
+        	success: function(data){
+        		$('#weight').val(data.weight);
+        		$('#target').val(data.target);
+    		}
+    	});
+	});
+	$("#actual").on('input', function(){
+		var actual = $('#actual').val();
+		var weight = $('#weight').val();
+		var target = $('#target').val();
+		var month = <?=$this->session->userdata('month')?>;
+		var arcv;
+		var formula = $('#formula').val();
+
+		if(formula == 'arcv'){
+			if(month < 2){
+				arcv = actual/target;
+				$('#arcv').val(arcv*100);
+			}else{
+				$.ajax({
+    				url: "<?php echo site_url('gmf/json_formula_avg')?>",
+    				type: "POST",
+    				dataType: "JSON",
+    				data:{
+        				kpi: $('#kpi').val(),
+    				},success: function(data){
+    					var pre_act = parseInt(data.actual,10);
+    					arcv = (parseInt(actual,10) + pre_act);
+    					$('#pre_act').val(pre_act);
+    					$('#arcv').val((arcv/target)*100);
+    				}
+    			});
+			}
+		}
+	});
+});
 </script>

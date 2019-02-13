@@ -76,6 +76,14 @@ class Kpi extends CI_Model {
 						 );
 	}
 
+	function get_kpi_join_score($kpi_id, $month, $kpi_name){
+		return $this->db->query("SELECT ts.kpi,ts.actual,ts.arcv FROM tb_kpi_score ts 
+									JOIN tb_kpi tk ON tk.kpi = ts.kpi 
+									WHERE tk.kpi_id = $kpi_id
+									AND ts.`month` = $month
+									AND ts.kpi_name = '$kpi_name'")->row();
+	}
+
 	function get_report($kpi_name,$month){
 		return $this->db->query("SELECT tk.*,ts.*,sum((ts.arcv/tk.target)*(tk.weight*100)) as arcv FROM tb_kpi tk 
 								LEFT JOIN tb_kpi_score ts 
@@ -114,10 +122,18 @@ class Kpi extends CI_Model {
 	}
 
 	function get_score_parent($kpi_name, $month){
-		return $this->db->query("SELECT ts.kpi_parent, sum(r.arcv*(tk.target)/100) AS total FROM tb_kpi tk 
-								 JOIN tb_kpi_structure ts on tk.kpi = ts.kpi LEFT JOIN tb_kpi_score r ON tk.kpi = r.kpi 
-								 WHERE r.month = '$month' AND ts.kpi_parent != '$kpi_name'
-								 GROUP BY ts.kpi_parent")->result();
+		return $this->db->query("SELECT ts.kpi,
+										r.arcv,
+										sum(r.actual) AS actual,
+										sum(arcv*weight) AS total
+									FROM
+										tb_kpi tk
+									JOIN tb_kpi_structure ts ON tk.kpi = ts.kpi
+									RIGHT JOIN tb_kpi_score r ON tk.kpi = r.kpi
+									WHERE
+										r. MONTH = $month
+									AND ts.kpi_parent = '$kpi_name'
+									GROUP BY ts.kpi_parent")->row();
 	}
 
 	function get_score_kpi_name($month, $kpi_name){

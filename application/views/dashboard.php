@@ -163,24 +163,23 @@
               <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th rowspan="2">KPI</th>
-                  <th rowspan="2">Bobot</th>
-                  <th colspan="2" style="text-align: center;">Hasil</th>
+                  <th>KPI</th>
+                  <th>Bobot</th>
+                  <th>Archievment</th>
                 </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td></td>
                     <td></td>
-                    <th>Nilai</th>
-                    <th>Skor</th>
                   </tr>
-                  <?php foreach ($nilai_kpi as $data) :?>
+                  <?php
+                  // print_r($nilai_kpi);
+                   foreach ($nilai_kpi as $data) :?>
                     <tr>
                     <td><?=$data->kpi?></td>
                     <td><?=($data->weight)*100?>%</td>
-                    <td><?=($data->skor/$data->weight)?></td>
-                    <td><?=$data->skor?></td>
+                    <td><?=($data->arcv == null)? "0" : $data->arcv ?>%</td>
                   <?php endforeach ?>
                   </tr>
                 </tbody>
