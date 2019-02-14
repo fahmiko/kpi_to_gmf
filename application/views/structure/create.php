@@ -207,8 +207,8 @@
                   <div class="form-group">
                     <label>Formula</label>
                     <select name="formula" class="form-control">
-                      <option value="arcv">YTD = Archievment</option>
-                      <option value="avg">TYD = Archievment/Month</option>
+                      <option value="arcv">YTD = Menambahkan</option>
+                      <option value="avg">TYD = Mempertahankan</option>
                     </select>
                   </div>
                 </div>

@@ -282,6 +282,9 @@ $(document).ready(function(){
     				}
     			});
 			}
+		}else{
+			arcv = actual/target;
+			$('#arcv').val(arcv*100);
 		}
 	});
 });

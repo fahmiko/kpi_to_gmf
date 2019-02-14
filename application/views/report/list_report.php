@@ -61,7 +61,7 @@
                               <td><?=$no?></td>
                               <td style="text-align: left;"><?=$data->kpi?></td>
                               <td><?=$data->target?>%</td>
-                              <td style="background-color: <?=($data->skor >= $data->target) ? '#00FF00' : '#CC1559'?>"><?=$data->skor?>%</td>
+                              <td style="background-color: <?=($data->arcv >= $data->target) ? '#00FF00' : '#CC1559'?>"><?=$data->arcv?>%</td>
                               <td><?=$data->target?>%</td>
                               <td style="background-color: <?=($report_all[$row]->avg >= $data->target) ? '#00FF00' : '#CC1559'?>"><?=number_format($report_all[$row]->avg,1)?></td>
                             </tr>
