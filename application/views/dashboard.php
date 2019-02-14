@@ -20,12 +20,11 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>KPI</h3>
+              <h3><?=($this->session->userdata('dashboard') == null)? "KPI" : "<label style='font-size:20px'>".$this->session->userdata('dashboard')."</small>"?></h3>
 
               <p><?=sizeof($tb_kpi_name)?> KPI Registered</p>
             </div>
             <div class="icon">
-              <i class="fa fa-dashboard"></i>
             </div>
             <a href="#" class="small-box-footer" id="select-kpi">Select KPI <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -153,7 +152,7 @@
       <!-- /.box -->
       <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Progress month <?=$month?></h3>
+              <h3 class="box-title">Progress s/d <?=$month?></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -178,8 +177,8 @@
                    foreach ($nilai_kpi as $data) :?>
                     <tr>
                     <td><?=$data->kpi?></td>
-                    <td><?=($data->weight)*100?>%</td>
-                    <td><?=($data->arcv == null)? "0" : $data->arcv ?>%</td>
+                    <td><?=($data->weight)*100?></td>
+                    <td><?=($data->arcv == null)? "0" : $data->arcv ?></td>
                   <?php endforeach ?>
                   </tr>
                 </tbody>

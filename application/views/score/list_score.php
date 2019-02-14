@@ -204,13 +204,23 @@ tr.shown td.details-control1 {
 					?>
 				</select>
 			</div>
-			<div class="form-group">
-				<label>Weight</label>
-				<input type="text" class="form-control" name="weight" id="weight" readonly="">
-			</div>
-			<div class="form-group">
-				<label>Target</label>
-				<input type="text" class="form-control" name="target" id="target" readonly="">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Weight</label>
+						<input type="text" class="form-control" name="weight" id="weight" readonly="">
+					</div>
+					<div class="form-group">
+						<label>Target</label>
+						<input type="text" class="form-control" name="target" id="target" readonly="">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Remarks</label>
+						<textarea class="form-control" style="height: 100px;" disabled="" id="remarks"></textarea>
+					</div>
+				</div>
 			</div>
 			<div class="form-group">
 				<label>Actual</label>
@@ -252,6 +262,7 @@ $(document).ready(function(){
         	success: function(data){
         		$('#weight').val(data.weight);
         		$('#target').val(data.target);
+        		$('#remarks').val(data.remarks);
     		}
     	});
 	});

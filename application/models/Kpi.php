@@ -122,10 +122,10 @@ class Kpi extends CI_Model {
 	}
 
 	function get_score_parent($kpi_name, $month){
-		return $this->db->query("SELECT ts.kpi,
+		return $this->db->query("SELECT ts.kpi_parent,
 										r.arcv,
 										sum(r.actual) AS actual,
-										sum(arcv*weight) AS total
+										sum(((actual/tk.target)*tk.weight)*100) AS total
 									FROM
 										tb_kpi tk
 									JOIN tb_kpi_structure ts ON tk.kpi = ts.kpi

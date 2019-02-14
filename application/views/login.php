@@ -40,7 +40,7 @@
 <body>
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>KPI </b>GMF AeroAsia</a>
+    <a href="#"><b>KPI </b>GMF AeroAsia</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

@@ -53,7 +53,7 @@ class Gmf extends CI_Controller {
 		// Get Data using model
 		$data['chart'] = $this->kpi->get_kpi_chart($kpi_name);
 		$data['kpi'] = $this->kpi->get_kpi_join_employee($kpi_name);
-		$data['nilai_kpi'] = $this->kpi->get_ikpi_all($month,$kpi_name);
+		$data['nilai_kpi'] = $this->kpi->get_ikpi_all($this->session->userdata('month'),$kpi_name);
 		$data['on_progress'] = $this->kpi->get_table_where('tb_kpi_name', 'status', 'on progress');
 		// Get data kpi Parent
 		$data['kpi1'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->result_array();
@@ -65,12 +65,21 @@ class Gmf extends CI_Controller {
 		$data['row'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->num_rows();
 		$data['row2'] = $this->db->where('level',2)->where('kpi_name',$kpi_name)->get('tb_kpi')->num_rows();
 		// Loop to get score kpi latest
-		$nilai = 0;
-        for($i = 1; $i<=intval(date('m'));$i++){
-          $score = $this->kpi->get_score_kpi_name($i,$this->session->userdata('dashboard'));
-          $nilai += $score['total'];
-        }
-        $data['score'] = $nilai/intval(date('m'));
+		// echo $this->session->userdata('formula');
+		if($this->session->userdata('formula') == 'avg'){
+			$nilai = 0;
+        	for($i = 1; $i<=$this->session->userdata('month');$i++){
+          		$score = $this->kpi->get_score_kpi_name($i,$this->session->userdata('dashboard'));
+          		$nilai += $score['total'];
+        	}
+        	$data['score'] = $nilai/$this->session->userdata('month');	
+		}else if($this->session->userdata('formula') == 'arcv'){
+			$score = $this->kpi->get_score_kpi_name($this->session->userdata('month'),$this->session->userdata('dashboard'));	
+			$data['score'] = $score['total'];
+		}else{
+			$data['score'] = 0;
+		}
+		
         // Generate view to display
 		$this->load->view('templates/header');
 		$this->load->view('dashboard', $data);
@@ -140,12 +149,16 @@ class Gmf extends CI_Controller {
 			}else{
 				$this->kpi->insert_score($kpi, $kpi_name, $month, $actual,$arcv);
 			}
-			$kpi_parent = $this->db->query("SELECT DISTINCT(kpi_parent),kpi_name FROM tb_kpi_structure")->result();
-			foreach ($kpi_parent as $row) {
-				$tbc = $this->kpi->get_score_parent($row->kpi_parent, $month);
-				$this->kpi->insert_score($row->kpi_parent, $kpi_name, $month, $tbc->actual,$tbc->total);
+			$kpi_parent = $this->db->query("SELECT DISTINCT(kpi_parent),kpi_name FROM tb_kpi_structure WHERE kpi_name = '$kpi_name' AND kpi_parent != '$kpi_name'")->result();
+			for($i = 0;$i < 2 ;$i++){
+				foreach ($kpi_parent as $row) {
+					$tbc = $this->kpi->get_score_parent($row->kpi_parent, $month);
+					$this->kpi->insert_score($tbc->kpi_parent, $kpi_name, $month, $tbc->actual,$tbc->total);
+					$this->kpi->insert_score($row->kpi_parent, $kpi_name, $month, $tbc->actual,$tbc->total);
 				// echo $row->kpi_parent;
-			}	
+				}		
+			}
+			
 			redirect('gmf/score');
 		}else{
 			// form validation code igniter set kpi and month is required

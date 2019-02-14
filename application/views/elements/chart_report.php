@@ -30,7 +30,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		click: onClick,
 		name: "<?=$row->kpi?>",
 		legendText: "<?=$row->kpi?>",
-		showInLegend: true, 
+		showInLegend: false, 
 		dataPoints:[
 		<?php for($j = 0;$j < $this->session->userdata('month');$j++){?>
 			{ label: "<?=DateTime::createFromFormat('!m', ($j+1))->format('F');?>",

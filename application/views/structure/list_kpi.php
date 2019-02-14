@@ -27,7 +27,7 @@
                   <th>KPI Name</th>
                   <th>Created By</th>
                   <th>Status</th>
-                  <th>Nilai</th>
+                  <!-- <th>Nilai</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,7 @@
                       <td>
                       <?php echo($data->status == 'finish')? "<span class='label label-success'>finish</span>":"<span class='label label-primary'>on progress</span>";?>
                       </td>
-                      <td>
+<!--                       <td>
                         <?php
                           $nilai = 0;
                           for($i = 1; $i<=intval(date('m'));$i++){
@@ -50,7 +50,7 @@
                           }
                           echo ($nilai/intval(date('m')));
                         ?>
-                      </td>
+                      </td> -->
                     </tr>
                   <?php endforeach ?>
                 </tbody>
