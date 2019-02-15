@@ -10,6 +10,7 @@ function get_color($actual, $target){
 	}
 }
 ?>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
 <style type="text/css">
 td.details-control {
     background: url('http://www.datatables.net/examples/resources/details_open.png')       no-repeat center center;
@@ -35,6 +36,8 @@ tr.shown td.details-control1 {
 .table-hover > tbody > tr:hover > th {
     background-color: #CFF5FF;
 }
+
+
 </style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -60,7 +63,7 @@ tr.shown td.details-control1 {
             <?=form_open('gmf/score')?>
             <div class="box-body">
             	<div class="row">
-            		<div class="col-md-2">
+            		<div class="col-md-2" hidden="">
             			<div class="input-group-prepend">
 	  						  <span class="input-group-text" id="">Cari KPI</span>
 	  					</div>
@@ -89,7 +92,7 @@ tr.shown td.details-control1 {
             		</div>
             		<div class="col-md-3">
             			<div class="input-group-prepend">
-	  						  <span class="input-group-text" id="">Cari KPI</span>
+	  						  <span class="input-group-text" id="">Bulan</span>
 	  					</div>
             			<div class="input-group input-group-sm">
                 			<select class="form-control" name="month">
@@ -121,7 +124,8 @@ tr.shown td.details-control1 {
 			<div class="btn-group-vertical" style="margin-bottom: 20px">
 				<button type="button" onclick="generateModal()" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Input Score</button>
 			</div>
-			<table id="dt_score" class="table table-striped">
+			<div class="table table-responsive" style="max-width: 95%;margin: 10px">
+			<table id="dt_score" class="pure table">
 				<thead>
 				<tr>
 					<?php
@@ -164,6 +168,7 @@ tr.shown td.details-control1 {
 				</tbody>
 				*/?>
 			</table>
+			</div>
 			<hr>
 			<?php } ?>
 		</div>

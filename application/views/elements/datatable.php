@@ -44,16 +44,13 @@ function format2(d){
 	if(d.length == 0){
 		table = "";
 	}else{
-	table = "<table class='table' cellspacing='0' border='0'>"+
-	"<tr>"+
-    		"<th><center>KPI</center></th>"+
-    		"<th>Actual</th>"+
-    		"<th>Archievment</th>"+
-    	"</tr>";
+	table = "<table class='table' cellspacing='0' border='0'>";
     for(i = 0;i < d.length; i++){
     	table += "<tr>"+
-    		'<td>'+d[i]['kpi']+'</td>'+
-    		'<td>'+d[i]['actual']+'</td>'+
+    		'<td width="6%"></td>'+
+            '<td width="24.5%">'+d[i]['kpi']+'</td>'+
+            '<td width="20%"></td>'+
+            '<td width="18.5%">'+d[i]['actual']+'</td>'+
     		'<td>'+d[i]['arcv']+'</td>'+
     	"</tr>";
     }
@@ -78,7 +75,7 @@ $(document).ready(function() {
             { "data": "weight" },
             { "data": "target" },
             { "data": "actual" },
-            { "data": "arcv"}
+            { "data": "arcv", render: $.fn.dataTable.render.number(',', '.', 2, '')}
         ],
         "order": [[1, 'asc']],
     } );

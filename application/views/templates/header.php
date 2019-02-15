@@ -142,6 +142,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
             <span>Report</span>
           </a>
       </ul>
+      <?php if($this->session->userdata('dashboard') != null){?>
       <ul class="sidebar-menu">
         <li class="treeview <?php echo ($this->uri->segment(2) == "chart") ? "active" : "" ?>">
           <a href="<?=site_url()?>gmf/chart">
@@ -149,6 +150,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
             <span>Chart</span>
           </a>
       </ul>
+    <?php } ?>
       <ul class="sidebar-menu">
         <li class="treeview">
           <a href="<?=site_url()?>gmf/logout">

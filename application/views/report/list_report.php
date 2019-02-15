@@ -1,7 +1,9 @@
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
 <style type="text/css">
   th{
-    color: white;
-    background-color: gray;
+    /*color: white;*/
+    /*background-color: gray;*/
+    background-color: #f4f4f4;
     text-align: center;
     vertical-align: middle;
   }
@@ -39,7 +41,8 @@
                 ?>
                 <a href="<?=site_url()?>gmf/print_report" class="btn btn-default" target="_blank"><i class="fa fa-print"></i> Print</a>
                   <br><br>
-                  <table class="table table-bordered table-stripped table-responsive">
+                  <div class="table table-responsive">
+                  <table class="pure table pure-table-bordered table-bordered">
                     <tr>
                       <th rowspan="2" style="vertical-align: middle;">NO</th>
                       <th rowspan="2" style="vertical-align: middle;">KPI</th>
@@ -61,9 +64,9 @@
                               <td><?=$no?></td>
                               <td style="text-align: left;"><?=$data->kpi?></td>
                               <td><?=$data->target?>%</td>
-                              <td style="background-color: <?=($data->arcv >= $data->target) ? '#00FF00' : '#CC1559'?>"><?=$data->arcv?>%</td>
+                              <td><?=$data->actual?>%</td>
                               <td><?=$data->target?>%</td>
-                              <td style="background-color: <?=($report_all[$row]->avg >= $data->target) ? '#00FF00' : '#CC1559'?>"><?=number_format($report_all[$row]->avg,1)?></td>
+                              <td><?=number_format($report_all[$row]->avg,1)?></td>
                             </tr>
                             <?php
                             $no++;
@@ -71,6 +74,7 @@
                         }
                       ?>
                 </table>
+              </div>
                 <?php }?>
                 <br><br>
             </div>

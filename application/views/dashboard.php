@@ -20,7 +20,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3><?=($this->session->userdata('dashboard') == null)? "KPI" : "<label style='font-size:20px'>".$this->session->userdata('dashboard')."</small>"?></h3>
+              <h3><?=($this->session->userdata('dashboard') == null)? "KPI" : substr($this->session->userdata('dashboard'),0,7)?></h3>
 
               <p><?=sizeof($tb_kpi_name)?> KPI Registered</p>
             </div>
@@ -178,7 +178,7 @@
                     <tr>
                     <td><?=$data->kpi?></td>
                     <td><?=($data->weight)*100?></td>
-                    <td><?=($data->arcv == null)? "0" : $data->arcv ?></td>
+                    <td><?=($data->arcv == null)? "0" : number_format($data->arcv,2) ?></td>
                   <?php endforeach ?>
                   </tr>
                 </tbody>
