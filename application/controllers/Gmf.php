@@ -46,8 +46,13 @@ class Gmf extends CI_Controller {
 			}
 			redirect('gmf','refresh');
 		}
+
+		if($this->session->userdata('month') == null){
+			$month = intval(date('m'));
+		}else{
+			$month = $this->session->userdata('month');
+		}
 		// Generate Month to String
-		$month = intval(date('m'));
 		$dateObj   = DateTime::createFromFormat('!m', $month);
 		$data['month'] = $dateObj->format('F');
 		// Get Data using model

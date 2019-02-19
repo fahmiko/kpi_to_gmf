@@ -6,6 +6,14 @@ $kpi = $this->session->userdata('dashboard');
 $data = array();
 ?>
 <script>
+// function getRandomColor() {
+//     var letters = '0123456789ABCDEF'.split('');
+//     var color = '#';
+//     for (var i = 0; i < 6; i++ ) {
+//         color += letters[Math.floor(Math.random() * 16)];
+//     }
+//     return color;
+// }
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -30,7 +38,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		click: onClick,
 		name: "<?=$row->kpi?>",
 		legendText: "<?=$row->kpi?>",
-		showInLegend: false, 
+		showInLegend: false,
 		dataPoints:[
 		<?php for($j = 0;$j < $this->session->userdata('month');$j++){?>
 			{ label: "<?=DateTime::createFromFormat('!m', ($j+1))->format('F');?>",
@@ -60,6 +68,8 @@ function toggleDataSeries(e) {
 function onClick(e) {
 		generate_chart_2nd(e.dataSeries.name);
 	}
+
+// console.log(chart.data[0]);
 }
 // Chart Donut Level 2
 function generate_chart_2nd(id){

@@ -51,7 +51,7 @@ function format2(d){
             '<td width="24.5%">'+d[i]['kpi']+'</td>'+
             '<td width="20%"></td>'+
             '<td width="18.5%">'+d[i]['actual']+'</td>'+
-    		'<td>'+d[i]['arcv']+'</td>'+
+    		'<td>'+d[i]['arcv']+' %'+'</td>'+
     	"</tr>";
     }
     table += "</table>";
@@ -75,7 +75,7 @@ $(document).ready(function() {
             { "data": "weight" },
             { "data": "target" },
             { "data": "actual" },
-            { "data": "arcv", render: $.fn.dataTable.render.number(',', '.', 2, '')}
+            { "data": "arcv", render: $.fn.dataTable.render.number(',', '.', 2, ' ', ' %')}
         ],
         "order": [[1, 'asc']],
     } );
@@ -123,7 +123,7 @@ $(document).ready(function() {
             				},
     				    	{ data:'kpi' },
                    			{ data: "actual" },
-            				{ data: "arcv"}
+            				{ data: "arcv", render: $.fn.dataTable.render.number(',', '.', 2, ' ', ' %')}
     				    ]
     				} );
 

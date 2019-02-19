@@ -227,17 +227,28 @@ tr.shown td.details-control1 {
 					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label>Actual</label>
-				<input type="text" class="form-control" name="actual" id="actual" placeholder="Nilai Actual" required="">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Actual</label>
+						<input type="text" class="form-control" name="actual" id="actual" placeholder="Nilai Actual" required="">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Archievment</label>
+						<div class="input-group input-group-sm">
+							<input type="text" class="form-control" name="arcv" id="arcv" readonly="">
+							<input type="hidden" name="pre_act" id="pre_act">
+							<input type="hidden" id="target">
+							<span class="input-group-btn">
+            		          	<button value="%" class="btn btn-default btn-xs">%</button>
+            		        </span>
+						</div>
+					</div>
+				</div>
 			</div>
 			<input type="hidden" id="formula" value="<?=$this->session->userdata('formula')?>">
-			<div class="form-group">
-				<label>Archievment</label>
-				<input type="text" class="form-control" name="arcv" id="arcv" readonly="">
-				<input type="hidden" name="pre_act" id="pre_act">
-				<input type="hidden" id="target">
-			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		<?=form_close()?>
       </div>

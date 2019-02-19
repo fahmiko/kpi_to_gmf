@@ -39,6 +39,7 @@
               <?php if($this->session->userdata('login')['status'] == 'admin') { ?>
                 <a class="btn btn-default" style="margin-bottom: 10px" onclick="create()"><span class="fa fa-plus"></span> Pegawai</a>
               <?php }?>
+              <div class="table table-responsive">
               <table id="dt_employee" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -72,6 +73,7 @@
                   <?php endforeach ?>
                 </tbody>
               </table>
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

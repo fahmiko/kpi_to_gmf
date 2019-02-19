@@ -25,6 +25,7 @@
               <p><?=sizeof($tb_kpi_name)?> KPI Registered</p>
             </div>
             <div class="icon">
+              <i class="fa fa-dashboard"></i>
             </div>
             <a href="#" class="small-box-footer" id="select-kpi">Select KPI <i class="fa fa-arrow-circle-right"></i></a>
           </div>

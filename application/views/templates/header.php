@@ -15,6 +15,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
   <link rel="stylesheet" href="<?=base_url()?>lte/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?=base_url()?>lte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?=base_url()?>resources/assets/css/buttons.dataTables.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?=base_url()?>lte/bower_components/font-awesome/css/font-awesome.min.css">
@@ -75,7 +76,7 @@ $initial = strtoupper(substr($login['nama'], 0,2));
       <span class="logo-lg"><b>KPI </b>Application</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top" style="background-image: linear-gradient(to right, #0093D1,#006495, #814374);">
+    <nav class="navbar navbar-static-top" style="background-image: linear-gradient(to right, #0093D1,#006495, #814374)">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
