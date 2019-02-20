@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-xs-12">
           <div class="pull-left"><h3>Kerja Dinas</h2>
-            <h4 style="color: gray;"> Pencapaian <?=$this->session->userdata('dashboard')?> & YTD <?=DateTime::createFromFormat('!m', intval(date('m')))->format('F')?></h4>
+            <h4 style="color: gray;"> Pencapaian <?=$this->session->userdata('dashboard')?> & YTD <?=DateTime::createFromFormat('!m', $this->session->userdata('month'))->format('F')?></h4>
           </div>
           <div class="pull-right"><img width="300px" src="<?=base_url()?>resources/img/gmf_logo.jpg"></div>
       </div>
@@ -55,35 +55,42 @@
     <div class="row">
       <div class="col-xs-12 table-responsive">
         <table class="table table-bordered">
-          <tr>
-              <th rowspan="2" style="vertical-align: middle;">KPI</th>
-              <th colspan="2"><?=DateTime::createFromFormat('!m', intval(date('m')))->format('F')?></th>
-              <th colspan="2">YTD <?=DateTime::createFromFormat('!m', intval(date('m')))->format('F')?></th>
-          </tr>
-          <tr>
-              <th width="15%">Target</th>
-              <th width="15%">Act</th>
-              <th width="15%">Target</th>
-              <th width="15%">Act</th>
-          </tr>
-            <?php
-            $no = 1;
-            $row = 0;
-            foreach ($report as $data) {
-              if($data->month == intval(date('m'))){?>
-                <tr>
-                  <td align="center"><?=$data->kpi?></td>
-                  <td><?=$data->target?>%</td>
-                  <td><?=$data->actual?>%</td>
-                  <td><?=$data->target?>%</td>
-                  <td><?=number_format($report_all[$row]->avg,1)?>%</td>
-                            </tr>
-                            <?php
-                            $no++;
+                    <tr>
+                      <th rowspan="2" style="vertical-align: middle;text-align: center;">KPI</th>
+                      <th rowspan="2" width="10%" style="vertical-align: middle;text-align: center;">Target</th>
+                      <th colspan="<?=($this->session->userdata('month'))?>" style="text-align: center">Actual</th>
+                      <th rowspan="2" width="10%" style="vertical-align: middle; text-align: center">Archievment<br>YTD</th>
+                    </tr>
+                    <tr>
+                      <?php for($i = 1; $i <= $this->session->userdata('month'); $i++){?>
+                        <th width="10%"><?=DateTime::createFromFormat('!m', $i)->format('F')?></th>
+                      <?php }?>
+                    </tr>
+                    <?php
+                    // print_r($report_all);
+                    foreach ($table as $data) {
+                      echo "<tr><td>$data->kpi</td>";
+                      echo "<td>$data->target</td>";
+                    for($i = 1; $i <= $this->session->userdata('month'); $i++){
+                      foreach ($report[$i] as $row) {
+                          if($row->kpi == $data->kpi){?>
+                            <td><?=$row->actual?></td>
+                          <?php }
+                        }
+                      }
+                      foreach ($report_ytd as $row2) {
+                        if($row2->kpi == $data->kpi){
+                          if($this->session->userdata('formula') == 'avg'){
+                              echo "<td>$row2->avg %</td>";
+                          }else{
+                            echo "<td>$row2->arcv %</td>";
                           }
                         }
-                      ?>
-          </table>
+                      }
+                    }
+                    echo "</tr>";
+                    ?>
+                </table>
       </div>
       <!-- /.col -->
     </div>

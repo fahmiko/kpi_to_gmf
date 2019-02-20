@@ -201,9 +201,9 @@ tr.shown td.details-control1 {
 					<option hidden="">Select One</option>
 					<?php
 						foreach ($ikpi as $data) {
-							// if($data->pic == $login['id_pegawai']){
+							if($data->pic == $login['id_pegawai']){
 								echo "<option value='$data->kpi_id'>$data->kpi</option>";
-							// }
+							}
 							?>
 						<?php }
 					?>

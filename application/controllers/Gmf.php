@@ -78,9 +78,11 @@ class Gmf extends CI_Controller {
           		$nilai += $score['total'];
         	}
         	$data['score'] = $nilai/$this->session->userdata('month');	
+        	$this->session->set_userdata('score',$data['score']);
 		}else if($this->session->userdata('formula') == 'arcv'){
 			$score = $this->kpi->get_score_kpi_name($this->session->userdata('month'),$this->session->userdata('dashboard'));	
 			$data['score'] = $score['total'];
+			$this->session->set_userdata('score',$data['score']);
 		}else{
 			$data['score'] = 0;
 		}
@@ -99,6 +101,19 @@ class Gmf extends CI_Controller {
 		// Get data report using model
 		$data['report'] = $this->kpi->get_report($this->session->userdata('dashboard'),$this->session->userdata('month'));
 		$data['skor'] = array();
+		if($this->session->userdata('formula') == 'avg'){
+			$nilai = 0;
+        	for($i = 1; $i<=$this->session->userdata('month');$i++){
+          		$score = $this->kpi->get_score_kpi_name($i,$this->session->userdata('dashboard'));
+          		$nilai += $score['total'];
+        	}
+        	$data['score'] = $nilai/$this->session->userdata('month');
+		}else if($this->session->userdata('formula') == 'arcv'){
+			$score = $this->kpi->get_score_kpi_name($this->session->userdata('month'),$this->session->userdata('dashboard'));	
+			$data['score'] = $score['total'];
+		}else{
+			$data['score'] = 0;
+		}
 		// Generate view to display
 		$this->load->view('templates/header');
 		$this->load->view('chart');
@@ -157,7 +172,12 @@ class Gmf extends CI_Controller {
 			$kpi_parent = $this->db->query("SELECT DISTINCT(kpi_parent),kpi_name FROM tb_kpi_structure WHERE kpi_name = '$kpi_name' AND kpi_parent != '$kpi_name'")->result();
 			for($i = 0;$i < 2 ;$i++){
 				foreach ($kpi_parent as $row) {
-					$tbc = $this->kpi->get_score_parent($row->kpi_parent, $month);
+					$parent = $this->db->where('kpi',$row->kpi_parent)->get('tb_kpi')->row();
+					$tbc = $this->kpi->get_score_parent($row->kpi_parent, $month, $parent->weight);
+					// echo $tbc->kpi_parent." ";
+					// echo $tbc->actual." ";
+					// echo $tbc->total." ";
+					// echo "<br>";
 					$this->kpi->insert_score($tbc->kpi_parent, $kpi_name, $month, $tbc->actual,$tbc->total);
 					$this->kpi->insert_score($row->kpi_parent, $kpi_name, $month, $tbc->actual,$tbc->total);
 				// echo $row->kpi_parent;
@@ -223,7 +243,7 @@ class Gmf extends CI_Controller {
 		}else{
 			$this->form_validation->set_rules('id_pegawai', 'Id Pegawai', 'required');
 		}
-		$this->form_validation->set_rules('nama', 'Nama', 'required|min_length[5]');
+		$this->form_validation->set_rules('nama', 'Nama', 'required|min_length[4]');
 		$this->form_validation->set_rules('jabatan', 'Jabatan', 'required');
 		if ($this->form_validation->run() === FALSE) {
 			$data['employee'] = $this->kpi->get_table('tb_pegawai');
@@ -339,9 +359,17 @@ class Gmf extends CI_Controller {
 
 	public function report(){
 		$this->check_session();
+		for($i = 1 ;$i <= $this->session->userdata('month');$i++){
+			$data['report'][$i] = $this->kpi->get_report($this->session->userdata('dashboard'),$i);
+			$data['column'] = sizeof($data['report'][$i]);
+		}
+		$data['table'] = $this->kpi->get_report($this->session->userdata('dashboard'),1);
 		$data['kpi_name'] = $this->kpi->get_table('tb_kpi_name');
-		$data['report'] = $this->kpi->get_report($this->session->userdata('dashboard'),intval(date('m')));
-		$data['report_all'] = $this->kpi->get_report_ytd($this->session->userdata('dashboard'),intval(date('m')));
+		if($this->session->userdata('formula')=='avg'){
+			$data['report_ytd'] = $this->kpi->get_report_ytd($this->session->userdata('dashboard'),$this->session->userdata('month'));
+		}else{
+			$data['report_ytd'] = $this->kpi->get_report($this->session->userdata('dashboard'),$this->session->userdata('month'));
+		}
 
 		$this->load->view('templates/header');
 		$this->load->view('report/list_report', $data, FALSE);
@@ -417,8 +445,17 @@ class Gmf extends CI_Controller {
 	}	
 
 	public function print_report(){
-		$data['report'] = $this->kpi->get_report($this->session->userdata('dashboard'),intval(date('m')));
-		$data['report_all'] = $this->kpi->get_report_ytd($this->session->userdata('dashboard'),intval(date('m')));
+		for($i = 1 ;$i <= $this->session->userdata('month');$i++){
+			$data['report'][$i] = $this->kpi->get_report($this->session->userdata('dashboard'),$i);
+			$data['column'] = sizeof($data['report'][$i]);
+		}
+		$data['table'] = $this->kpi->get_report($this->session->userdata('dashboard'),1);
+		$data['kpi_name'] = $this->kpi->get_table('tb_kpi_name');
+		if($this->session->userdata('formula')=='avg'){
+			$data['report_ytd'] = $this->kpi->get_report_ytd($this->session->userdata('dashboard'),$this->session->userdata('month'));
+		}else{
+			$data['report_ytd'] = $this->kpi->get_report($this->session->userdata('dashboard'),$this->session->userdata('month'));
+		}
 		$this->load->view('report/print',$data);
 	}
 

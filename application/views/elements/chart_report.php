@@ -15,7 +15,6 @@ $data = array();
 //     return color;
 // }
 window.onload = function () {
-
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	title:{
@@ -23,18 +22,29 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	},	
 	toolTip: {
 		shared: true
-	},
-	legend: {
+	},	
+		legend: {
 		cursor:"pointer",
 		itemclick: function(e){
           generate_chart_2nd(e.dataSeries.name);
         }
 	},
+	<?php if($this->session->userdata('formula') == 'avg'){ ?>
+	axisY: {
+		title: "Average",
+		// valueFormatString: "#0,,.",
+		// suffix: "mn",
+		stripLines: [{
+			value: <?=$score?>,
+			label: "Average"
+		}]
+	},
+	<?php }?>
 	data: [
 	// Start For Data
 	<?php foreach ($report as $row){?>
 	{
-		type: "column",
+		type: "<?=($this->session->userdata('formula') == 'avg')? 'spline':'column'?>",
 		click: onClick,
 		name: "<?=$row->kpi?>",
 		legendText: "<?=$row->kpi?>",
@@ -66,8 +76,12 @@ function toggleDataSeries(e) {
 	chart.render();
 }
 function onClick(e) {
+	<?php if($this->session->userdata('formula') == 'arcv'){?>
 		generate_chart_2nd(e.dataSeries.name);
-	}
+	<?php }?>
+	
+		
+}
 
 // console.log(chart.data[0]);
 }

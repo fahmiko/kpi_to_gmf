@@ -42,7 +42,8 @@ function format (d) {
 function format2(d){
 	var table;
 	if(d.length == 0){
-		table = "";
+		// table = "";
+        alert("NO DATA");
 	}else{
 	table = "<table class='table' cellspacing='0' border='0'>";
     for(i = 0;i < d.length; i++){
@@ -103,6 +104,10 @@ $(document).ready(function() {
     				$.each(json, function(key, value){
         				dtTable.push({weight: value['weight'],target: value['target'],kpi: value['kpi'],actual: value['actual'],arcv: value['arcv']});
     				});
+
+                    if(json.length == 0){
+                        alert('NO DATA');
+                    }else{
     				row.child(format(tableCounter)).show();
             		tr.addClass('shown');
 
@@ -155,6 +160,7 @@ $(document).ready(function() {
         			});
     				tableCounter++;
     			}
+            }
     		});
         }
     } );

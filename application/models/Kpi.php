@@ -85,7 +85,7 @@ class Kpi extends CI_Model {
 	}
 
 	function get_report($kpi_name,$month){
-		return $this->db->query("SELECT tk.*,ts.*,sum((ts.arcv/tk.target)*(tk.weight*100)) as arcv FROM tb_kpi tk 
+		return $this->db->query("SELECT tk.*,ts.* FROM tb_kpi tk 
 								LEFT JOIN tb_kpi_score ts 
 								ON tk.kpi = ts.kpi 
 								WHERE ts.`month` = $month
@@ -96,7 +96,7 @@ class Kpi extends CI_Model {
 	}
 
 	function get_report_ytd($kpi_name,$month){
-		return $this->db->query("SELECT sum(ts.arcv/$month) as avg FROM tb_kpi tk 
+		return $this->db->query("SELECT tk.kpi, sum(ts.arcv/$month) as avg FROM tb_kpi tk 
 								LEFT JOIN tb_kpi_score ts 
 								ON tk.kpi = ts.kpi 
 								WHERE ts.`month` <= $month
@@ -121,11 +121,11 @@ class Kpi extends CI_Model {
 								AND r.month = '$month'")->result();
 	}
 
-	function get_score_parent($kpi_name, $month){
+	function get_score_parent($kpi_name, $month, $weight){
 		return $this->db->query("SELECT ts.kpi_parent,
 										r.arcv,
 										sum(r.actual) AS actual,
-										sum(((actual/tk.target)*tk.weight)*100) AS total
+										sum(((actual/tk.target)*$weight)*100) AS total
 									FROM
 										tb_kpi tk
 									JOIN tb_kpi_structure ts ON tk.kpi = ts.kpi
